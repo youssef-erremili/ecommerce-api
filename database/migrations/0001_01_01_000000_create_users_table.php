@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\AccountType;
 
 return new class extends Migration
 {
@@ -13,12 +14,18 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->string('email')->unique();
+            $table->enum('account_type', array_column(AccountType::cases(), 'value'))->default(AccountType::CUSTOMER->value);
+            $table->string('physical_address')->nullable();
+            $table->string('profile')->nullable();
+            $table->integer('phone_number')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
