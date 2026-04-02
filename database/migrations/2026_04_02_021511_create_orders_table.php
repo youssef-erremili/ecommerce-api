@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
+            $table->enum('status', ['pending', 'processing', 'shipped', 'delivered', 'cancelled'])->default('pending');
+            $table->float('total_price');
+            $table->string('shipping_address');
+            $table->string('billing_address');
+            $table->string('payment_method');
+            $table->enum('payment_status', ['unpaid', 'paid', 'refunded'])->default('unpaid');
+            $table->integer('tracking_number')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
