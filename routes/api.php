@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AuthenticatedUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -13,5 +14,8 @@ Route::prefix('v1')->group(function () {
         Route::post('login', LoginController::class);
         Route::post('logout', LogoutController::class)->middleware('auth:sanctum');
     });
+
+    // get authenticated user
+    Route::get('/me', AuthenticatedUserController::class)->middleware('auth:sanctum');
 
 });
