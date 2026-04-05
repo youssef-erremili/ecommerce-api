@@ -22,6 +22,10 @@ class ApiMessages
 
     const string USER_DELETED = 'User deleted successfully';
 
+    const string USER_LOGGED_IN = 'logged in successfully';
+
+    const string USER_LOGGED_OUT = 'logged out successfully';
+
     // User errors
     const string USER_NOT_FOUND = 'User not found';
 

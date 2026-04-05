@@ -21,8 +21,8 @@ class AuthenticatedUserController extends Controller
         }
 
         return ApiResponse::success(
-            message: ApiMessages::USER_FETCHED,
-            data: new UserResource($user)
+            ApiMessages::USER_FETCHED,
+            new UserResource($user)
         );
     }
 }

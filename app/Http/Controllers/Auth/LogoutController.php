@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Support\ApiMessages;
+use App\Support\ApiResponse;
 use Illuminate\Http\Request;
 
 class LogoutController extends Controller
@@ -12,18 +14,13 @@ class LogoutController extends Controller
         $user = $request->user();
 
         if (! $user) {
-            return response()->json([
-                'error' => 'Something went wrong',
-                'type' => 'error',
-            ]);
+            return ApiResponse::error(ApiMessages::USER_NOT_FOUND);
         }
 
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
-            'message' => 'Logged out successfully',
-            'type' => 'success',
-        ]);
-
+        return ApiResponse::success(
+            ApiMessages::USER_LOGGED_OUT
+        );
     }
 }

@@ -9,7 +9,7 @@ class ApiResponse
     /**
      * Create a new class instance.
      */
-    public static function success($message, $data = []): JsonResponse
+    public static function success(string $message, $data = []): JsonResponse
     {
         return response()->json([
             'message' => $message,
@@ -18,10 +18,10 @@ class ApiResponse
         ]);
     }
 
-    public static function error(): JsonResponse
+    public static function error(string $message = ApiMessages::AN_ERROR_OCCURRED): JsonResponse
     {
         return response()->json([
-            'message' => ApiMessages::AN_ERROR_OCCURRED,
+            'message' => $message,
             'type' => ApiMessages::ERROR,
         ]);
     }
