@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AuthenticatedUserController;
+use App\Http\Controllers\Products\StoreProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -17,5 +18,10 @@ Route::prefix('v1')->group(function () {
 
     // get authenticated user
     Route::get('/me', AuthenticatedUserController::class)->middleware('auth:sanctum');
+
+    // products routes api
+    Route::middleware('auth:sanctum')->prefix('products')->group(function () {
+        Route::post('store', StoreProductController::class);
+    });
 
 });
