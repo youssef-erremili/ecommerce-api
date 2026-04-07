@@ -22,7 +22,7 @@ class AuthenticatedUserController extends Controller
 
         return ApiResponse::success(
             ApiMessages::USER_FETCHED,
-            new UserResource($user)
+            [UserResource::make($user)]
         );
     }
 }

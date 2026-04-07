@@ -9,7 +9,7 @@ class ApiResponse
     /**
      * Create a new class instance.
      */
-    public static function success(string $message, $data = []): JsonResponse
+    public static function success(string $message, array $data = []): JsonResponse
     {
         return response()->json([
             'message' => $message,
