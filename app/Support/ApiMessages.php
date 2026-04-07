@@ -32,4 +32,6 @@ class ApiMessages
     const string USER_ALREADY_EXISTS = 'User already exists';
 
     const string UNAUTHORIZED_PRODUCT_CREATION = 'You are not authorized to create this product.';
+
+    const string PRODUCT_CREATION = 'Your product created successfully.';
 }

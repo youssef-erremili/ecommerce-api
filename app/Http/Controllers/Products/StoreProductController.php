@@ -17,7 +17,7 @@ class StoreProductController extends Controller
     public function __invoke(StoreProductRequest $request, ProductService $service)
     {
         $user = $request->user();
-        $product = $request->validated();
+        $data = $request->validated();
 
         // first check is user is logged in
         if (! $user) {
@@ -29,13 +29,17 @@ class StoreProductController extends Controller
             return ApiResponse::error(ApiMessages::UNAUTHORIZED_PRODUCT_CREATION);
         }
 
-        $savedProduct = $service->create($user, $product);
+        $product = $service->create($user, $data);
 
-        if ($savedProduct) {
-            return response()->json(
-                $savedProduct
-            );
+        if (! $product) {
+            return ApiResponse::error();
         }
+
+        return ApiResponse::success(
+
+            ApiMessages::PRODUCT_CREATION,
+            $product
+        );
 
     }
 }
