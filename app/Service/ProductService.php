@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Models\Product;
 use App\Models\User;
 use App\Traits\HandlesImageUpload;
 
@@ -24,6 +23,8 @@ class ProductService
         // 3 trigger events and jobs in background
 
         // 4 store product in db
-        return $user->products()->create($data)->load(['user', 'category']);
+        return $user->products()
+            ->create($data)
+            ->load(['user', 'category']);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Products;
 use App\Enums\AccountType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Products\StoreProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Service\ProductService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
@@ -36,9 +37,8 @@ class StoreProductController extends Controller
         }
 
         return ApiResponse::success(
-
             ApiMessages::PRODUCT_CREATION,
-            $product
+            [ProductResource::make($product)]
         );
 
     }
