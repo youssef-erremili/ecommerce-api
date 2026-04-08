@@ -32,7 +32,9 @@ class ProductResource extends JsonResource
 
             'category' => [
                 'id' => $this->category->id,
-                'name' => $this->category->name,
+                'category_name' => $this->category->category_name,
+                'description' => $this->category->description,
+                'category_slug' => $this->category->category_slug,
             ],
         ];
     }

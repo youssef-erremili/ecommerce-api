@@ -32,14 +32,9 @@ class StoreProductController extends Controller
 
         $product = $service->create($user, $data);
 
-        if (! $product) {
-            return ApiResponse::error();
-        }
-
         return ApiResponse::success(
             ApiMessages::PRODUCT_CREATION,
             [ProductResource::make($product)]
         );
-
     }
 }
