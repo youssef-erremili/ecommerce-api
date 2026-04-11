@@ -4,16 +4,16 @@ namespace App\Service;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Traits\FileManager;
 use App\Traits\GenerateProductSlug;
-use App\Traits\HandlesImageUpload;
 
 class ProductService
 {
+    use FileManager;
     use GenerateProductSlug;
-    use HandlesImageUpload;
 
     /**
-     * Create a new class instance.
+     * Create a new product instance.
      */
     public function create(User $user, array $data): Product
     {
@@ -21,11 +21,7 @@ class ProductService
         $data['product_images'] = $this->upload($data['product_images']);
         $data['slug'] = $this->slug($data['product_name']);
 
-        // 2 attach category using name
-
-        // 3 trigger events and jobs in background
-
-        // 4 store product in db
+        // 2 store product in db
         return $user->products()
             ->create($data)
             ->load(['user', 'category']);
