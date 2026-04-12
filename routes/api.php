@@ -26,7 +26,7 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->prefix('products')->group(function () {
         Route::post('store', StoreProductController::class);
         Route::get('show', ShowProductController::class);
-        Route::post('update/{product}', UpdateProductController::class);
+        Route::put('update/{product}', UpdateProductController::class);
         Route::post('delete/{product}', DestroyProductController::class);
     });
 
