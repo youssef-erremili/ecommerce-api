@@ -34,7 +34,7 @@ class StoreProductController extends Controller
 
         return ApiResponse::success(
             ApiMessages::PRODUCT_CREATED,
-            [ProductResource::make($product)]
+            ProductResource::collection($product)->resolve()
         );
     }
 }

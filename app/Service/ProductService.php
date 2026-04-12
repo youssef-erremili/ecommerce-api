@@ -55,4 +55,12 @@ class ProductService
     {
         return Product::where('user_id', $id)->latest()->get();
     }
+
+    public function update(Product $product, array $data): Product
+    {
+        $data['product_images'] = $this->upload($data['product_images']);
+        $product->update($data);
+
+        return $product;
+    }
 }
