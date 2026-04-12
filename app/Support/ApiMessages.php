@@ -4,38 +4,58 @@ namespace App\Support;
 
 class ApiMessages
 {
-    // Api actions
-    const string SUCCESS = 'success';
+    // Generic Statuses
+    public const string SUCCESS = 'success';
 
-    const string ERROR = 'error';
+    public const string ERROR = 'error';
 
-    const string NOTFOUND = 'notfound';
+    public const string NOT_FOUND = 'not_found';
 
-    const string AN_ERROR_OCCURRED = 'An unexpected error occurred';
+    // Auth
+    public const string AUTH_SUCCESSFUL_LOGIN = 'Login successful. Welcome back!';
 
-    // User actions
-    const string USER_FETCHED = 'User retrieved successfully';
+    public const string AUTH_SUCCESSFUL_LOGOUT = 'Logout successful. See you soon!';
 
-    const string USER_CREATED = 'User created successfully';
+    public const string AUTH_SUCCESSFUL_REGISTRATION = 'Registration successful. Welcome to our platform!';
 
-    const string USER_UPDATED = 'User updated successfully';
+    public const string AUTH_FAILED_LOGIN = 'Invalid credentials. Please check your email and password.';
 
-    const string USER_DELETED = 'User deleted successfully';
+    public const string AUTH_UNAUTHORIZED = 'You are not authorized to perform this action.';
 
-    const string USER_LOGGED_IN = 'logged in successfully';
+    public const string AUTH_UNAUTHENTICATED = 'Please log in to access this resource.';
 
-    const string USER_LOGGED_OUT = 'logged out successfully';
+    // User
+    public const string USER_FETCHED = 'User profile retrieved successfully.';
 
-    // User errors
-    const string USER_NOT_FOUND = 'User not found';
+    public const string USER_CREATED = 'User account created successfully.';
 
-    const string USER_ALREADY_EXISTS = 'User already exists';
+    public const string USER_UPDATED = 'User profile updated successfully.';
 
-    const string UNAUTHORIZED_PRODUCT_CREATION = 'You are not authorized to create this product.';
+    public const string USER_DELETED = 'User account deleted successfully.';
 
-    const string PRODUCT_CREATION = 'Your product created successfully.';
+    public const string USER_NOT_FOUND = 'User not found.';
 
-    const string PRODUCT_DELETION_FAILED = 'Something had happen while deleting the product, try again';
+    public const string USER_ALREADY_EXISTS = 'A user with this email already exists.';
 
-    const string PRODUCT_DELETION_SUCCESS = 'Your product deleted successfully.';
+    // Product
+    public const string PRODUCT_FETCHED = 'Product retrieved successfully.';
+
+    public const string PRODUCT_CREATED = 'Product created successfully.';
+
+    public const string PRODUCT_UPDATED = 'Product updated successfully.';
+
+    public const string PRODUCT_DELETED = 'Product deleted successfully.';
+
+    public const string PRODUCT_NOT_FOUND = 'The requested product could not be found.';
+
+    public const string PRODUCT_CREATION_FAILED = 'Failed to create the product. Please try again.';
+
+    public const string PRODUCT_UPDATE_FAILED = 'Failed to update the product. Please try again.';
+
+    public const string PRODUCT_DELETION_FAILED = 'Failed to delete the product. Please try again.';
+
+    public const string PRODUCT_UNAUTHORIZED_ACTION = 'You are not authorized to manage this product.';
+
+    // General
+    public const string AN_ERROR_OCCURRED = 'An unexpected error occurred. Please try again later.';
 }
