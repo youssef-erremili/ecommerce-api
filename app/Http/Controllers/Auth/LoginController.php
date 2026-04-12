@@ -24,10 +24,10 @@ class LoginController extends Controller
         $token = $user->createToken('authToken')->plainTextToken;
 
         return ApiResponse::success(
-            ApiMessages::USER_LOGGED_IN,
+            ApiMessages::AUTH_SUCCESSFUL_LOGIN,
             [
                 'token' => $token,
-                UserResource::make($user),
+                UserResource::collection($user)->resolve(),
             ],
         );
 

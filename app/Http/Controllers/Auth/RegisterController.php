@@ -25,7 +25,7 @@ class RegisterController extends Controller
         $token = $user->createToken('authToken')->plainTextToken;
 
         return ApiResponse::success(
-            ApiMessages::USER_CREATED,
+            ApiMessages::AUTH_SUCCESSFUL_REGISTRATION,
             [
                 'token' => $token,
                 'user' => UserResource::make($user),

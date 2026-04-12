@@ -22,7 +22,7 @@ class DestroyProductController extends Controller
 
         $holder = $service->destroy($product);
         if ($holder) {
-            return ApiResponse::success(ApiMessages::PRODUCT_DELETION_SUCCESS);
+            return ApiResponse::success(ApiMessages::PRODUCT_DELETED);
         }
 
         return ApiResponse::error(ApiMessages::PRODUCT_DELETION_FAILED);

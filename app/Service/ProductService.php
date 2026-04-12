@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Traits\FileManager;
 use App\Traits\GenerateProductSlug;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
 class ProductService
@@ -48,5 +49,10 @@ class ProductService
         }
 
         return false;
+    }
+
+    public function show(int|string $id): Collection
+    {
+        return Product::where('user_id', $id)->latest()->get();
     }
 }

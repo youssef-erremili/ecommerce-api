@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\AccountType;
 use App\Models\Product;
 use App\Models\User;
 
@@ -12,7 +13,7 @@ class ProductPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->account_type === AccountType::ADMIN || $user->account_type === AccountType::VENDOR;
     }
 
     /**
