@@ -2,18 +2,22 @@
 
 namespace App\Service;
 
+use App\Jobs\DeleteProductImage;
 use App\Models\Product;
 use App\Models\User;
+use App\Traits\FileManager;
 use App\Traits\GenerateProductSlug;
-use App\Traits\HandlesImageUpload;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Log;
 
 class ProductService
 {
+    use AuthorizesRequests;
+    use FileManager;
     use GenerateProductSlug;
-    use HandlesImageUpload;
 
     /**
-     * Create a new class instance.
+     * Create a new product instance.
      */
     public function create(User $user, array $data): Product
     {
@@ -21,13 +25,28 @@ class ProductService
         $data['product_images'] = $this->upload($data['product_images']);
         $data['slug'] = $this->slug($data['product_name']);
 
-        // 2 attach category using name
-
-        // 3 trigger events and jobs in background
-
-        // 4 store product in db
+        // 2 store product in db
         return $user->products()
             ->create($data)
             ->load(['user', 'category']);
+    }
+
+    public function destroy(Product $product): bool
+    {
+        try {
+            $images = $product->product_images;
+            $holder = $product->delete();
+            if ($holder) {
+                if (! empty($images)) {
+                    DeleteProductImage::dispatch($images);
+                }
+
+                return true;
+            }
+        } catch (\Exception $exception) {
+            Log::error('Service Error: Product deletion failed. '.$exception->getMessage());
+        }
+
+        return false;
     }
 }

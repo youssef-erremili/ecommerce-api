@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AuthenticatedUserController;
+use App\Http\Controllers\Products\DestroyProductController;
 use App\Http\Controllers\Products\StoreProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::prefix('v1')->group(function () {
     // products routes api
     Route::middleware('auth:sanctum')->prefix('products')->group(function () {
         Route::post('store', StoreProductController::class);
+        Route::post('delete/{product}', DestroyProductController::class);
     });
 
 });

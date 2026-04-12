@@ -34,4 +34,8 @@ class ApiMessages
     const string UNAUTHORIZED_PRODUCT_CREATION = 'You are not authorized to create this product.';
 
     const string PRODUCT_CREATION = 'Your product created successfully.';
+
+    const string PRODUCT_DELETION_FAILED = 'Something had happen while deleting the product, try again';
+
+    const string PRODUCT_DELETION_SUCCESS = 'Your product deleted successfully.';
 }

@@ -26,7 +26,6 @@ class Product extends Model
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'is_active' => 'boolean',
             'price' => 'decimal:2',
             'discount' => 'decimal:2',
