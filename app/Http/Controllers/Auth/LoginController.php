@@ -27,7 +27,7 @@ class LoginController extends Controller
             ApiMessages::AUTH_SUCCESSFUL_LOGIN,
             [
                 'token' => $token,
-                UserResource::make($user),
+                UserResource::collection($user)->resolve(),
             ],
         );
 
