@@ -27,14 +27,16 @@ class StoreProductController extends Controller
 
         // second check is user is seller not customer
         if ($user->account_type === AccountType::CUSTOMER) {
-            return ApiResponse::error(ApiMessages::PRODUCT_UNAUTHORIZED_ACTION);
+            return ApiResponse::error(ApiMessages::USER_NOT_VENDOR);
         }
 
         $product = $service->create($user, $data);
 
         return ApiResponse::success(
             ApiMessages::PRODUCT_CREATED,
-            ProductResource::collection($product)->resolve()
+            [
+                'product' => ProductResource::make($product),
+            ]
         );
     }
 }

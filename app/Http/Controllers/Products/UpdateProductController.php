@@ -32,7 +32,9 @@ class UpdateProductController extends Controller
 
         return ApiResponse::success(
             ApiMessages::PRODUCT_UPDATED,
-            [ProductResource::make($product)]
+            [
+                'product' => ProductResource::make($product),
+            ]
         );
     }
 }

@@ -21,11 +21,16 @@ class ShowProductController extends Controller
     public function __invoke(Request $request, ProductService $service)
     {
         $this->authorize('viewAny', Product::class);
+
         $products = $service->show($request->user()->id);
+        $count = count($products);
 
         return ApiResponse::success(
             ApiMessages::PRODUCT_FETCHED,
-            ProductResource::collection($products)->resolve()
+            [
+                'total' => $count,
+                'products' => ProductResource::collection($products)->resolve(),
+            ]
         );
     }
 }

@@ -56,6 +56,8 @@ class ApiMessages
 
     public const string PRODUCT_UNAUTHORIZED_ACTION = 'You are not authorized to manage this product.';
 
+    public const string USER_NOT_VENDOR = 'You must be a vendor to perform this action.';
+
     // General
     public const string AN_ERROR_OCCURRED = 'An unexpected error occurred. Please try again later.';
 }
