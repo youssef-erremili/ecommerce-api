@@ -22,13 +22,22 @@ class ShowProductController extends Controller
     {
         $this->authorize('viewAny', Product::class);
 
-        $products = $service->show($request->user()->id);
-        $count = count($products);
+        $products = $service->show();
 
         return ApiResponse::success(
             ApiMessages::PRODUCT_FETCHED,
             [
-                'total' => $count,
+                'pagination' => [
+                    'total' => $products->total(),
+                    'per_page' => $products->perPage(),
+                    'current_page' => $products->currentPage(),
+                    'first_page' => 1,
+                    'last_page' => $products->lastPage(),
+                    'from' => $products->firstItem(),
+                    'to' => $products->lastItem(),
+                    'prev_page' => $products->previousPageUrl() ?? null,
+                    'next_page' => $products->nextPageUrl() ?? null,
+                ],
                 'products' => ProductResource::collection($products)->resolve(),
             ]
         );
