@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AuthenticatedUserController;
 use App\Http\Controllers\Products\DestroyProductController;
 use App\Http\Controllers\Products\ShowProductController;
+use App\Http\Controllers\Products\SingleProductController;
 use App\Http\Controllers\Products\StoreProductController;
 use App\Http\Controllers\Products\UpdateProductController;
 use Illuminate\Support\Facades\Route;
@@ -24,8 +25,9 @@ Route::prefix('v1')->group(function () {
 
     // products routes api
     Route::middleware('auth:sanctum')->prefix('products')->group(function () {
+        Route::get('lists', ShowProductController::class);
         Route::post('store', StoreProductController::class);
-        Route::get('show', ShowProductController::class);
+        Route::get('show/{product}', SingleProductController::class);
         Route::put('update/{product}', UpdateProductController::class);
         Route::post('delete/{product}', DestroyProductController::class);
     });

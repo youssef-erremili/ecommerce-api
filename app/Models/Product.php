@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static OwnedByUser()
+ */
 #[Fillable([
     'user_id',
     'category_id',
@@ -42,5 +45,10 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function scopeOwnedByUser($query)
+    {
+        return $query->where('user_id', auth()->id());
     }
 }
