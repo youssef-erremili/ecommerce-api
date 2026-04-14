@@ -10,7 +10,6 @@ use App\Service\ProductService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Log;
 
 class UpdateProductController extends Controller
 {
@@ -24,15 +23,13 @@ class UpdateProductController extends Controller
         $this->authorize('update', $product);
 
         $data = $request->validated();
-        try {
-            $service->update($product, $data);
-        } catch (\Exception $exception) {
-            Log::error(ApiMessages::AN_ERROR_OCCURRED.$exception->getMessage());
-        }
+        $service->update($product, $data);
 
         return ApiResponse::success(
             ApiMessages::PRODUCT_UPDATED,
-            [ProductResource::make($product)]
+            [
+                'product' => ProductResource::make($product),
+            ]
         );
     }
 }

@@ -19,7 +19,6 @@ trait FileManager
             try {
                 $path = $file->store('images', 'supabase');
                 $urls[] = Storage::disk('supabase')->url($path);
-
             } catch (UnableToWriteFile $e) {
                 Log::error('Supabase upload failed: '.$e->getPrevious()->getMessage());
                 throw $e;

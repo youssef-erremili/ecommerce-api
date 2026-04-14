@@ -3,10 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @method static OwnedByUser()
+ */
 #[Fillable([
     'user_id',
     'category_id',
@@ -21,7 +26,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 ])]
 class Product extends Model
 {
-    use SoftDeletes;
+    use HasApiTokens, HasFactory, SoftDeletes;
 
     protected function casts(): array
     {
@@ -42,5 +47,10 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function scopeOwnedByUser($query)
+    {
+        return $query->where('user_id', auth()->id());
     }
 }
