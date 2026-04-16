@@ -21,8 +21,6 @@ Route::prefix('v1')->group(function () {
         Route::post('logout', LogoutController::class)->middleware('auth:sanctum');
     });
 
-    // get authenticated user
-
     // products routes api
     Route::middleware('auth:sanctum')->prefix('products')->group(function () {
         Route::get('lists', ShowProductController::class);
@@ -36,7 +34,5 @@ Route::prefix('v1')->group(function () {
         Route::get('/me', AuthenticatedUserController::class);
         Route::patch('/upgrade/{id}', AccountTypeController::class);
     });
-
-    // change user account type
 
 });

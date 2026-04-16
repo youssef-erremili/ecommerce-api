@@ -21,6 +21,7 @@ class AccountTypeController extends Controller
     {
         $this->authorize('update', $user);
 
+        // prevent admin from execute action on its account
         if (auth()->user()->id === (int) $id) {
             return ApiResponse::error(ApiMessages::ADMIN_ACTION_RESTRICTED);
         }
@@ -31,6 +32,7 @@ class AccountTypeController extends Controller
             return ApiResponse::error(ApiMessages::USER_NOT_FOUND);
         }
 
+        // check if user is already a vendor
         if ($account->account_type === AccountType::VENDOR) {
             return ApiResponse::error(ApiMessages::ACCOUNT_ALREADY_VENDOR);
         }
