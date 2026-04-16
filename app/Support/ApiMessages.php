@@ -33,7 +33,7 @@ class ApiMessages
 
     public const string USER_DELETED = 'User account deleted successfully.';
 
-    public const string USER_NOT_FOUND = 'User not found.';
+    public const string USER_NOT_FOUND = 'The requested user could not be found.';
 
     public const string USER_ALREADY_EXISTS = 'A user with this email already exists.';
 
@@ -58,6 +58,14 @@ class ApiMessages
 
     public const string USER_NOT_VENDOR = 'You must be a vendor to perform this action.';
 
+    public const string ACCOUNT_ALREADY_VENDOR = 'This account is already registered as a vendor.';
+
     // General
     public const string AN_ERROR_OCCURRED = 'An unexpected error occurred. Please try again later.';
+
+    public const string ACTION_COMPLETED = 'The request was processed successfully.';
+
+    public const string ADMIN_ACTION_RESTRICTED = 'Administrators cannot perform this action.';
+
+    public const string ADMIN_ACTION_AllOWED = 'Only administrators can perform this action.';
 }
