@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Enums\AccountType;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\UserService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 
 class AccountTypeController extends Controller
 {
@@ -17,33 +19,22 @@ class AccountTypeController extends Controller
      */
     use AuthorizesRequests;
 
-    public function __invoke(User $user, int|string $id)
+    /**
+     * @throws Exception
+     */
+    public function __invoke(UserService $service, int|string $id): JsonResponse
     {
-        $this->authorize('update', $user);
+        try {
+            $this->authorize('update', User::class);
+            $account = $service->upgradeUserAccountType($id);
 
-        // prevent admin from execute action on its account
-        if (auth()->user()->id === (int) $id) {
-            return ApiResponse::error(ApiMessages::ADMIN_ACTION_RESTRICTED);
+            return ApiResponse::success(
+                ApiMessages::ACTION_COMPLETED,
+                ['user' => UserResource::make($account)]
+            );
+
+        } catch (Exception $exception) {
+            return ApiResponse::error($exception->getMessage());
         }
-
-        $account = User::find($id);
-
-        if (! $account) {
-            return ApiResponse::error(ApiMessages::USER_NOT_FOUND);
-        }
-
-        // check if user is already a vendor
-        if ($account->account_type === AccountType::VENDOR) {
-            return ApiResponse::error(ApiMessages::ACCOUNT_ALREADY_VENDOR);
-        }
-
-        $account->update([
-            'account_type' => AccountType::VENDOR,
-        ]);
-
-        return ApiResponse::success(
-            ApiMessages::ACTION_COMPLETED,
-            [UserResource::make($account)]
-        );
     }
 }

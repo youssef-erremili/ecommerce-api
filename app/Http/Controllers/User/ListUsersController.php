@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Enums\AccountType;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\UserService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use App\Traits\Paginator;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\DB;
 
 class ListUsersController extends Controller
 {
@@ -18,26 +18,25 @@ class ListUsersController extends Controller
 
     /**
      * Handle the incoming request.
+     *
+     * @throws Exception
      */
-    public function __invoke(User $user)
+    public function __invoke(UserService $service)
     {
-        $this->authorize('view', $user);
+        try {
+            $this->authorize('viewAny', User::class);
 
-        // fetch all user
-        $users = DB::table('users')
-            ->whereNot('account_type', AccountType::ADMIN)
-            ->paginate();
+            $users = $service->paginate();
 
-        if (! $users) {
-            return ApiResponse::error();
+            return ApiResponse::success(
+                ApiMessages::ACTION_COMPLETED,
+                [
+                    'users' => UserResource::collection($users)->resolve(),
+                    'pagination' => $this->paginateResource($users),
+                ]
+            );
+        } catch (Exception $exception) {
+            return ApiResponse::error($exception->getMessage());
         }
-
-        return ApiResponse::success(
-            ApiMessages::ACTION_COMPLETED,
-            [
-                'pagination' => $this->paginateResource($users),
-                UserResource::collection($users)->resolve(),
-            ]
-        );
     }
 }
