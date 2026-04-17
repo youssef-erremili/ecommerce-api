@@ -3,13 +3,14 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\AuthenticatedUserController;
 use App\Http\Controllers\Products\DestroyProductController;
 use App\Http\Controllers\Products\ShowProductController;
 use App\Http\Controllers\Products\SingleProductController;
 use App\Http\Controllers\Products\StoreProductController;
 use App\Http\Controllers\Products\UpdateProductController;
 use App\Http\Controllers\User\AccountTypeController;
+use App\Http\Controllers\User\AuthenticatedUserController;
+use App\Http\Controllers\User\ListUsersController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -33,6 +34,7 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->prefix('account')->group(function () {
         Route::get('/me', AuthenticatedUserController::class);
         Route::patch('/upgrade/{id}', AccountTypeController::class);
+        Route::get('/users', ListUsersController::class);
     });
 
 });

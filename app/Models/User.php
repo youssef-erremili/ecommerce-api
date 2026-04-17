@@ -31,6 +31,8 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'account_type' => AccountType::class,
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
     }
 

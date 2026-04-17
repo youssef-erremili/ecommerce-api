@@ -18,4 +18,9 @@ class UserPolicy
             ? Response::allow()
             : Response::deny(ApiMessages::ADMIN_ACTION_AllOWED, 403);
     }
+
+    public function view(User $user): bool
+    {
+        return $user->account_type === AccountType::ADMIN;
+    }
 }
