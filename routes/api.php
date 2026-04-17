@@ -11,6 +11,8 @@ use App\Http\Controllers\Products\UpdateProductController;
 use App\Http\Controllers\User\AccountTypeController;
 use App\Http\Controllers\User\AuthenticatedUserController;
 use App\Http\Controllers\User\ListUsersController;
+use App\Support\ApiMessages;
+use App\Support\ApiResponse;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -26,9 +28,14 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->prefix('products')->group(function () {
         Route::get('lists', ShowProductController::class);
         Route::post('store', StoreProductController::class);
-        Route::get('show/{product}', SingleProductController::class);
+        Route::get('show/{product}', SingleProductController::class)->missing(function () {
+            return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
+        });
         Route::patch('update/{product}', UpdateProductController::class);
-        Route::post('delete/{product}', DestroyProductController::class);
+        Route::post('delete/{product}', DestroyProductController::class)
+            ->missing(function () {
+                return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
+            });
     });
 
     Route::middleware('auth:sanctum')->prefix('account')->group(function () {
