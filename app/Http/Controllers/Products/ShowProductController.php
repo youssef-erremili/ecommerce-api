@@ -8,12 +8,14 @@ use App\Models\Product;
 use App\Service\ProductService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
+use App\Traits\Paginator;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class ShowProductController extends Controller
 {
     use AuthorizesRequests;
+    use Paginator;
 
     /**
      * Handle the incoming request.
@@ -27,17 +29,7 @@ class ShowProductController extends Controller
         return ApiResponse::success(
             ApiMessages::PRODUCT_FETCHED,
             [
-                'pagination' => [
-                    'total' => $products->total(),
-                    'per_page' => $products->perPage(),
-                    'current_page' => $products->currentPage(),
-                    'first_page' => 1,
-                    'last_page' => $products->lastPage(),
-                    'from' => $products->firstItem(),
-                    'to' => $products->lastItem(),
-                    'prev_page' => $products->previousPageUrl() ?? null,
-                    'next_page' => $products->nextPageUrl() ?? null,
-                ],
+                'pagination' => $this->paginateResource($products),
                 'products' => ProductResource::collection($products)->resolve(),
             ]
         );
