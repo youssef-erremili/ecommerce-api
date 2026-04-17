@@ -22,8 +22,8 @@ class UserResource extends JsonResource
             'physical_address' => $this->physical_address,
             'profile' => $this->profile,
             'phone_number' => $this->phone_number,
-            'email_verified_at' => $this->email_verified_at?->ToFormattedDateString(),
-            'created_at' => $this->created_at?->ToFormattedDateString(),
+            'email_verified_at' => $this->email_verified_at,
+            'created_at' => $this->created_at,
         ];
     }
 }
