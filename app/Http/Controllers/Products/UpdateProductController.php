@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Products\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use App\Service\ProductService;
+use App\Services\ProductService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -17,6 +17,8 @@ class UpdateProductController extends Controller
 
     /**
      * Handle the incoming request.
+     *
+     * @throws \Exception
      */
     public function __invoke(UpdateProductRequest $request, Product $product, ProductService $service)
     {

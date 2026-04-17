@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Products;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Service\ProductService;
+use App\Services\ProductService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DestroyProductController extends Controller
@@ -15,16 +16,19 @@ class DestroyProductController extends Controller
 
     /**
      * Handle the incoming request.
+     *
+     * @throws Exception
      */
-    public function __invoke(Product $product, ProductService $service)
+    public function __invoke(ProductService $service, Product $product)
     {
-        $this->authorize('delete', $product);
+        try {
+            $this->authorize('delete', $product);
+            $service->destroy($product);
 
-        $holder = $service->destroy($product);
-        if ($holder) {
             return ApiResponse::success(ApiMessages::PRODUCT_DELETED);
-        }
 
-        return ApiResponse::error(ApiMessages::PRODUCT_DELETION_FAILED);
+        } catch (Exception $exception) {
+            return ApiResponse::error($exception->getMessage());
+        }
     }
 }
