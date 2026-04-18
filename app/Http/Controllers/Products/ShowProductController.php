@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Products;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use App\Service\ProductService;
+use App\Services\ProductService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use App\Traits\Paginator;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class ShowProductController extends Controller
 {
@@ -20,18 +21,21 @@ class ShowProductController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, ProductService $service)
+    public function __invoke(ProductService $service): JsonResponse
     {
-        $this->authorize('viewAny', Product::class);
+        try {
+            $this->authorize('viewAny', Product::class);
+            $products = $service->paginate();
 
-        $products = $service->show();
-
-        return ApiResponse::success(
-            ApiMessages::PRODUCT_FETCHED,
-            [
-                'pagination' => $this->paginateResource($products),
-                'products' => ProductResource::collection($products)->resolve(),
-            ]
-        );
+            return ApiResponse::success(
+                ApiMessages::PRODUCT_FETCHED,
+                [
+                    'pagination' => $this->paginateResource($products),
+                    'products' => ProductResource::collection($products)->resolve(),
+                ]
+            );
+        } catch (Exception $exception) {
+            return ApiResponse::error($exception->getMessage());
+        }
     }
 }

@@ -4,26 +4,31 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Services\UserService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
-use Illuminate\Http\Request;
+use Exception;
 
 class AuthenticatedUserController extends Controller
 {
     /**
      * Handle the incoming request.
+     *
+     * @throws Exception
      */
-    public function __invoke(Request $request)
+    public function __invoke(UserService $service)
     {
-        $user = $request->user();
+        try {
+            $user = $service->getAuthUser();
 
-        if (! $user) {
-            return ApiResponse::error();
+            return ApiResponse::success(
+                ApiMessages::USER_FETCHED,
+                [
+                    'user' => UserResource::make($user),
+                ]
+            );
+        } catch (Exception $exception) {
+            return ApiResponse::error($exception->getMessage());
         }
-
-        return ApiResponse::success(
-            ApiMessages::USER_FETCHED,
-            [UserResource::make($user)]
-        );
     }
 }
