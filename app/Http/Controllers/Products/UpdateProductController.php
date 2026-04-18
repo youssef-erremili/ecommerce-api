@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Services\ProductService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class UpdateProductController extends Controller
@@ -18,7 +19,7 @@ class UpdateProductController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __invoke(UpdateProductRequest $request, Product $product, ProductService $service)
     {
