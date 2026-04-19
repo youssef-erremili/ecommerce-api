@@ -7,10 +7,11 @@ use App\Models\Wishlist;
 use App\Services\WishlistService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
-class StoreWishListsController extends Controller
+class BulkDestroyWishListsController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -20,14 +21,18 @@ class StoreWishListsController extends Controller
     public function __invoke(Request $request, WishlistService $service)
     {
         try {
-            $this->authorize('create', Wishlist::class);
+            $this->authorize('deleteAny', Wishlist::class);
 
-            $id = $request->integer('product_id');
-            $service->add(auth()->user(), $id);
+            $ids = $request->array('ids');
+            $service->clear($ids);
 
-            return ApiResponse::success(ApiMessages::ACTION_COMPLETED);
-        } catch (\Exception $exception) {
+            return ApiResponse::success(
+                ApiMessages::ACTION_COMPLETED
+            );
+
+        } catch (Exception $exception) {
             return ApiResponse::error($exception->getMessage());
         }
+
     }
 }

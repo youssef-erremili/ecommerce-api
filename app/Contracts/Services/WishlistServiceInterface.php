@@ -3,6 +3,7 @@
 namespace App\Contracts\Services;
 
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface WishlistServiceInterface
@@ -11,7 +12,7 @@ interface WishlistServiceInterface
 
     public function add(User $user, int $productId): bool;
 
-    public function remove(User $user, int $productId): bool;
+    public function remove(Wishlist $wishlist): bool;
 
-    public function clear(User $user): bool;
+    public function clear(array $ids): bool;
 }

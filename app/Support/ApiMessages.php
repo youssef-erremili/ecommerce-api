@@ -72,5 +72,5 @@ class ApiMessages
     // WishLists
     public const string WISH_ALREADY_EXISTS = 'A product is already exists.';
 
-    public const string WISH_EMPTY = 'A Wishlist is empty.';
+    public const string WISHLIST_EMPTY = 'A Wishlist is empty.';
 }

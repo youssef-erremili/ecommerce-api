@@ -28,7 +28,7 @@ class WishlistService implements WishlistServiceInterface
         }
 
         if ($holder->isEmpty()) {
-            throw new Exception(ApiMessages::WISH_EMPTY);
+            throw new Exception(ApiMessages::WISHLIST_EMPTY);
         }
 
         return $holder;
@@ -50,7 +50,7 @@ class WishlistService implements WishlistServiceInterface
             ->where('product_id', $holder->id)
             ->exists();
 
-        if ($isWishListAlreadyExists === true) {
+        if ($isWishListAlreadyExists) {
             throw new Exception(ApiMessages::WISH_ALREADY_EXISTS);
         }
 
@@ -63,13 +63,29 @@ class WishlistService implements WishlistServiceInterface
         return true;
     }
 
-    public function remove(User $user, int $productId): bool
+    public function remove(Wishlist $wishlist): bool
     {
-        return true;
+        return $wishlist->delete();
     }
 
-    public function clear(User $user): bool
+    /**
+     * @throws Exception
+     */
+    public function clear(array $ids): bool
     {
+        if (! $ids) {
+            throw new Exception('Invalid IDs.');
+        }
+
+        $holder = Wishlist::query()
+            ->whereIn('id', $ids)
+            ->where('user_id', auth()->user()->id)
+            ->delete();
+
+        if (! $holder) {
+            throw new Exception(ApiMessages::AN_ERROR_OCCURRED);
+        }
+
         return true;
     }
 }

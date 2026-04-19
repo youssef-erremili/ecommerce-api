@@ -11,6 +11,8 @@ use App\Http\Controllers\Products\UpdateProductController;
 use App\Http\Controllers\User\AccountTypeController;
 use App\Http\Controllers\User\AuthenticatedUserController;
 use App\Http\Controllers\User\ListUsersController;
+use App\Http\Controllers\WishLists\BulkDestroyWishListsController;
+use App\Http\Controllers\WishLists\DestroyWishListController;
 use App\Http\Controllers\WishLists\ListsWishListsController;
 use App\Http\Controllers\WishLists\StoreWishListsController;
 use App\Support\ApiMessages;
@@ -34,7 +36,7 @@ Route::prefix('v1')->group(function () {
             return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
         });
         Route::patch('update/{product}', UpdateProductController::class);
-        Route::post('delete/{product}', DestroyProductController::class)
+        Route::delete('delete/{product}', DestroyProductController::class)
             ->missing(function () {
                 return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
             });
@@ -49,6 +51,11 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->prefix('wishlist')->group(function () {
         Route::post('store', StoreWishListsController::class);
         Route::get('lists', ListsWishListsController::class);
+        Route::delete('delete/{wishlist}', DestroyWishListController::class)
+            ->missing(function () {
+                return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
+            });
+        Route::delete('/bulk-delete', BulkDestroyWishListsController::class);
     });
 
 });
