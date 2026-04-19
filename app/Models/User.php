@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['first_name', 'last_name', 'email', 'password', 'phone_number', 'account_type'])]
+#[Fillable(['first_name', 'last_name', 'email', 'password', 'phone_number', 'account_type', 'product_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -39,5 +39,10 @@ class User extends Authenticatable
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function wishlists(): HasMany
+    {
+        return $this->HasMany(Wishlist::class);
     }
 }
