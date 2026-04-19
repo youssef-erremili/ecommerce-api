@@ -68,4 +68,9 @@ class ApiMessages
     public const string ADMIN_ACTION_RESTRICTED = 'Administrators cannot perform this action.';
 
     public const string ADMIN_ACTION_AllOWED = 'Only administrators can perform this action.';
+
+    // WishLists
+    public const string WISH_ALREADY_EXISTS = 'A product is already exists.';
+
+    public const string WISH_EMPTY = 'A Wishlist is empty.';
 }

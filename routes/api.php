@@ -11,6 +11,8 @@ use App\Http\Controllers\Products\UpdateProductController;
 use App\Http\Controllers\User\AccountTypeController;
 use App\Http\Controllers\User\AuthenticatedUserController;
 use App\Http\Controllers\User\ListUsersController;
+use App\Http\Controllers\WishLists\ListsWishListsController;
+use App\Http\Controllers\WishLists\StoreWishListsController;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +44,11 @@ Route::prefix('v1')->group(function () {
         Route::get('/me', AuthenticatedUserController::class);
         Route::patch('/upgrade/{id}', AccountTypeController::class);
         Route::get('/users', ListUsersController::class);
+    });
+
+    Route::middleware('auth:sanctum')->prefix('wishlist')->group(function () {
+        Route::post('store', StoreWishListsController::class);
+        Route::get('lists', ListsWishListsController::class);
     });
 
 });
