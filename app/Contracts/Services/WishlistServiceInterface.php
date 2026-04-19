@@ -3,7 +3,6 @@
 namespace App\Contracts\Services;
 
 use App\Models\User;
-use App\Models\Wishlist;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface WishlistServiceInterface
