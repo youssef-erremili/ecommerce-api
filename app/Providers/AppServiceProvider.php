@@ -25,8 +25,8 @@ class AppServiceProvider extends ServiceProvider
     {
         User::observe(UserObserver::class);
 
-        Gate::define('admin-access', function (User $user){
-            return $user->account_type === AccountType::ADMIN->value;
+        Gate::define('admin-access', function (User $user) {
+            return $user->account_type === AccountType::ADMIN;
         });
     }
 }
