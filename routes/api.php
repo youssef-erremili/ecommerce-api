@@ -8,9 +8,9 @@ use App\Http\Controllers\Products\ShowProductController;
 use App\Http\Controllers\Products\SingleProductController;
 use App\Http\Controllers\Products\StoreProductController;
 use App\Http\Controllers\Products\UpdateProductController;
-use App\Http\Controllers\User\AccountTypeController;
-use App\Http\Controllers\User\AuthenticatedUserController;
-use App\Http\Controllers\User\ListUsersController;
+use App\Http\Controllers\User\Admin\AccountTypeController;
+use App\Http\Controllers\User\Admin\ListUsersController;
+use App\Http\Controllers\User\RegularUsers\AuthenticatedUserController;
 use App\Http\Controllers\WishLists\BulkDestroyWishListsController;
 use App\Http\Controllers\WishLists\DestroyWishListController;
 use App\Http\Controllers\WishLists\ListsWishListsController;
@@ -36,25 +36,29 @@ Route::prefix('v1')->group(function () {
             return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
         });
         Route::patch('update/{product}', UpdateProductController::class);
-        Route::delete('delete/{product}', DestroyProductController::class)
-            ->missing(function () {
-                return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
-            });
+        Route::delete('delete/{product}', DestroyProductController::class)->missing(function () {
+            return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
+        });
     });
 
     Route::middleware('auth:sanctum')->prefix('account')->group(function () {
+        // for Admins
+        Route::prefix('admin')->group(function () {
+            Route::patch('/upgrade/{id}', AccountTypeController::class);
+            Route::get('/users', ListUsersController::class);
+            Route::delete('/delete/{user}', ListUsersController::class);
+        });
+
+        // for Regular
         Route::get('/me', AuthenticatedUserController::class);
-        Route::patch('/upgrade/{id}', AccountTypeController::class);
-        Route::get('/users', ListUsersController::class);
     });
 
     Route::middleware('auth:sanctum')->prefix('wishlist')->group(function () {
         Route::post('store', StoreWishListsController::class);
         Route::get('lists', ListsWishListsController::class);
-        Route::delete('delete/{wishlist}', DestroyWishListController::class)
-            ->missing(function () {
-                return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
-            });
+        Route::delete('delete/{wishlist}', DestroyWishListController::class)->missing(function () {
+            return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
+        });
         Route::delete('/bulk-delete', BulkDestroyWishListsController::class);
     });
 

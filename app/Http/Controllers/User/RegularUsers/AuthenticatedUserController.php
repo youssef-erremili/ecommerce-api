@@ -1,21 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\User\RegularUsers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use App\Models\User;
 use App\Services\UserService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
-use App\Traits\Paginator;
 use Exception;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class ListUsersController extends Controller
+class AuthenticatedUserController extends Controller
 {
-    use AuthorizesRequests, Paginator;
-
     /**
      * Handle the incoming request.
      *
@@ -24,15 +19,12 @@ class ListUsersController extends Controller
     public function __invoke(UserService $service)
     {
         try {
-            $this->authorize('viewAny', User::class);
-
-            $users = $service->paginate();
+            $user = $service->getAuthUser();
 
             return ApiResponse::success(
-                ApiMessages::ACTION_COMPLETED,
+                ApiMessages::USER_FETCHED,
                 [
-                    'users' => UserResource::collection($users)->resolve(),
-                    'pagination' => $this->paginateResource($users),
+                    'user' => UserResource::make($user),
                 ]
             );
         } catch (Exception $exception) {

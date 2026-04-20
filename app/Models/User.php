@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->HasMany(Wishlist::class);
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->account_type === AccountType::ADMIN;
+    }
 }
