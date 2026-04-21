@@ -101,6 +101,11 @@ class UserService implements UserServiceInterface
      */
     public function destroy(User $user): bool
     {
+        // restrict admin to not delete its account
+        if ($user->id === auth()->id()) {
+            throw new Exception(ApiMessages::ADMIN_ACTION_RESTRICTED);
+        }
+
         $holder = $user->delete();
 
         if (! $holder) {

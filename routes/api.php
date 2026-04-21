@@ -9,6 +9,8 @@ use App\Http\Controllers\Products\SingleProductController;
 use App\Http\Controllers\Products\StoreProductController;
 use App\Http\Controllers\Products\UpdateProductController;
 use App\Http\Controllers\User\Admin\AccountTypeController;
+use App\Http\Controllers\User\Admin\DestroyUserAdminController;
+use App\Http\Controllers\User\Admin\EditUserAdminController;
 use App\Http\Controllers\User\Admin\ListUsersController;
 use App\Http\Controllers\User\RegularUsers\AuthenticatedUserController;
 use App\Http\Controllers\User\RegularUsers\DestroyUserController;
@@ -48,7 +50,8 @@ Route::prefix('v1')->group(function () {
         Route::middleware('can:admin-access')->prefix('admin')->group(function () {
             Route::patch('/upgrade/{id}', AccountTypeController::class);
             Route::get('/users', ListUsersController::class);
-            Route::delete('/delete/{user}', ListUsersController::class);
+            Route::delete('/delete/{user}', DestroyUserAdminController::class);
+            Route::patch('/edit/{user}', EditUserAdminController::class);
         });
 
         // for Regular
