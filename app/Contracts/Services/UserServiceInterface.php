@@ -18,4 +18,6 @@ interface UserServiceInterface
     public function update(User $user, array $data): User;
 
     public function destroy(User $user): bool;
+
+    public function resetPassword(User $user, mixed $newPassword): bool;
 }
