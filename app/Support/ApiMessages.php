@@ -37,6 +37,8 @@ class ApiMessages
 
     public const string USER_UPDATE_FAILED = 'Failed to update your information. Please try again.';
 
+    public const string USER_DELETE_FAILED = 'Failed to delete your account. Please try again.';
+
     // Product
     public const string PRODUCT_FETCHED = 'Product retrieved successfully.';
 

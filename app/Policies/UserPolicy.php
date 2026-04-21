@@ -27,6 +27,11 @@ class UserPolicy
     // policies for regular user
     public function updateRegular(User $user, User $model): bool
     {
-        return $user->id === $model->id;
+        return $user->id === $model->id || $user->account_type === AccountType::ADMIN;
+    }
+
+    public function delete(User $user, User $model): bool
+    {
+        return $user->id === $model->id || $user->account_type === AccountType::ADMIN;
     }
 }

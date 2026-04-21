@@ -95,4 +95,18 @@ class UserService implements UserServiceInterface
 
         return $user->refresh();
     }
+
+    /**
+     * @throws Exception
+     */
+    public function destroy(User $user): bool
+    {
+        $holder = $user->delete();
+
+        if (! $holder) {
+            throw new Exception(ApiMessages::USER_DELETE_FAILED);
+        }
+
+        return true;
+    }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Products\UpdateProductController;
 use App\Http\Controllers\User\Admin\AccountTypeController;
 use App\Http\Controllers\User\Admin\ListUsersController;
 use App\Http\Controllers\User\RegularUsers\AuthenticatedUserController;
+use App\Http\Controllers\User\RegularUsers\DestroyUserController;
 use App\Http\Controllers\User\RegularUsers\EditUserController;
 use App\Http\Controllers\WishLists\BulkDestroyWishListsController;
 use App\Http\Controllers\WishLists\DestroyWishListController;
@@ -53,6 +54,7 @@ Route::prefix('v1')->group(function () {
         // for Regular
         Route::get('/me', AuthenticatedUserController::class);
         Route::patch('/edit/{user}', EditUserController::class);
+        Route::delete('/delete/{user}', DestroyUserController::class);
     });
 
     Route::middleware('auth:sanctum')->prefix('wishlist')->group(function () {

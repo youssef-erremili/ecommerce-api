@@ -16,4 +16,6 @@ interface UserServiceInterface
     public function upgradeUserAccountType(int|string $id): User;
 
     public function update(User $user, array $data): User;
+
+    public function destroy(User $user): bool;
 }
