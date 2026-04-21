@@ -51,7 +51,7 @@ Route::prefix('v1')->group(function () {
             Route::patch('/upgrade/{id}', AccountTypeController::class);
             Route::get('/users', ListUsersController::class);
             Route::delete('/delete/{user}', DestroyUserAdminController::class);
-            // Route::patch('/edit/{user}', EditUserAdminController::class);
+            Route::patch('/edit/{user}', EditUserAdminController::class);
         });
 
         // for Regular
