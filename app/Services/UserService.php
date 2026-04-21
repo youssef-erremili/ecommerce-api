@@ -114,4 +114,20 @@ class UserService implements UserServiceInterface
 
         return true;
     }
+
+    /**
+     * @throws Exception
+     */
+    public function resetPassword(User $user, mixed $newPassword): bool
+    {
+        $holder = $user->update([
+            'password' => $newPassword,
+        ]);
+
+        if (! $holder) {
+            throw new Exception(ApiMessages::AN_ERROR_OCCURRED);
+        }
+
+        return true;
+    }
 }
