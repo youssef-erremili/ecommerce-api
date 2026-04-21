@@ -23,4 +23,10 @@ class UserPolicy
     {
         return $user->account_type === AccountType::ADMIN;
     }
+
+    // policies for regular user
+    public function updateRegular(User $user, User $model): bool
+    {
+        return $user->id === $model->id;
+    }
 }

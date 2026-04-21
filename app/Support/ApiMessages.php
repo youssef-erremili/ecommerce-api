@@ -35,7 +35,7 @@ class ApiMessages
 
     public const string USER_NOT_FOUND = 'The requested user could not be found.';
 
-    public const string USER_ALREADY_EXISTS = 'A user with this email already exists.';
+    public const string USER_UPDATE_FAILED = 'Failed to update your information. Please try again.';
 
     // Product
     public const string PRODUCT_FETCHED = 'Product retrieved successfully.';

@@ -13,5 +13,7 @@ interface UserServiceInterface
 
     public function getAuthUser(): User|JsonResponse|Authenticatable;
 
-    public function upgradeUserAccountType(int|string $id);
+    public function upgradeUserAccountType(int|string $id): User;
+
+    public function update(User $user, array $data): User;
 }

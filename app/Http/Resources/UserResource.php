@@ -23,7 +23,6 @@ class UserResource extends JsonResource
             'profile' => $this->profile,
             'phone_number' => $this->phone_number,
             'email_verified_at' => $this->email_verified_at,
-            'created_at' => $this->created_at,
         ];
     }
 }

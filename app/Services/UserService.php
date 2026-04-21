@@ -81,4 +81,18 @@ class UserService implements UserServiceInterface
 
         return $holder;
     }
+
+    /**
+     * @throws Exception
+     */
+    public function update(User $user, array $data): User
+    {
+        $holder = $user->update($data);
+
+        if (! $holder) {
+            throw new Exception(ApiMessages::USER_UPDATE_FAILED);
+        }
+
+        return $user->refresh();
+    }
 }
