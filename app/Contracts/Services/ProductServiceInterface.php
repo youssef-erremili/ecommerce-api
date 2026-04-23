@@ -15,4 +15,6 @@ interface ProductServiceInterface
     public function update(Product $product, array $data): Product;
 
     public function destroy(Product $product): bool;
+
+    public function uploadImages(Product $product, array $images): Product;
 }

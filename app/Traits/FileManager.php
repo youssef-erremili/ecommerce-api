@@ -14,14 +14,15 @@ trait FileManager
     public function upload(array $files): array
     {
         $urls = [];
+        $directory = 'images/'.auth()->id();
 
         foreach ($files as $file) {
             try {
-                $path = $file->store('images', 'supabase');
+                $path = $file->store($directory, 'supabase');
                 $urls[] = Storage::disk('supabase')->url($path);
-            } catch (UnableToWriteFile $e) {
-                Log::error('Supabase upload failed: '.$e->getPrevious()->getMessage());
-                throw $e;
+            } catch (UnableToWriteFile $exception) {
+                Log::error('Supabase upload failed: '.$exception->getMessage());
+                throw $exception;
             }
         }
 
