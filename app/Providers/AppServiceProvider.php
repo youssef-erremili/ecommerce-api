@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Enums\AccountType;
+use App\Models\Product;
 use App\Models\User;
+use App\Observers\ProductObserver;
 use App\Observers\UserObserver;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         User::observe(UserObserver::class);
+        Product::observe(ProductObserver::class);
 
         Gate::define('admin-access', function (User $user) {
             return $user->account_type === AccountType::ADMIN;
