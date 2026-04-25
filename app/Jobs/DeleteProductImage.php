@@ -23,13 +23,10 @@ class DeleteProductImage implements ShouldQueue
      */
     public function handle(): void
     {
+        $base = config('filesystems.disks.supabase.url_base');
         foreach ($this->images as $image) {
             try {
-                $path = str_replace(
-                    'https://qxtagomijcgmgxfzpnmg.storage.supabase.co/storage/v1/s3/ProductsAssets/',
-                    '',
-                    $image
-                );
+                $path = str_replace($base, '', $image);
                 if (Storage::disk('supabase')->exists($path)) {
                     Storage::disk('supabase')->delete($path);
                 }

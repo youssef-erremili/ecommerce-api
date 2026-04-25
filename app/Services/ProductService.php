@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ProductService implements ProductServiceInterface
 {
@@ -82,13 +83,38 @@ class ProductService implements ProductServiceInterface
      */
     public function update(Product $product, array $data): Product
     {
-        try {
-            $data['product_images'] = $this->upload($data['product_images']);
-            $product->update($data);
+        $holder = $product->update($data);
 
-        } catch (Exception $exception) {
-            Log::error(ApiMessages::PRODUCT_NOT_FOUND.$exception->getMessage());
+        if (! $holder) {
             throw new Exception(ApiMessages::PRODUCT_NOT_FOUND);
+        }
+
+        return $product;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function uploadImages(Product $product, array $images): Product
+    {
+        $base = config('filesystems.disks.supabase.url_base');
+
+        foreach ($product->product_images ?? [] as $image) {
+            $path = str_replace($base, '', $image);
+
+            if (Storage::disk('supabase')->exists($path)) {
+                Storage::disk('supabase')->delete($path);
+            }
+        }
+
+        $URLs = $this->upload($images['product_images']);
+
+        $holder = $product->update([
+            'product_images' => $URLs,
+        ]);
+
+        if (! $holder) {
+            throw new Exception(ApiMessages::PRODUCT_UPDATE_FAILED);
         }
 
         return $product;

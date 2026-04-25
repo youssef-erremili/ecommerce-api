@@ -22,19 +22,17 @@ class ProductResource extends JsonResource
             'slug' => $this->slug,
             'discount' => $this->discount,
             'quantity' => $this->quantity,
-            'product_images' => $this->product_images,
-            'user' => [
-                'id' => $this->user->id,
+            'product_images' => collect($this->product_images)->map(function ($image) {
+                return $image;
+            }),
+            'vendor' => [
                 'first_name' => $this->user->first_name,
                 'last_name' => $this->user->last_name,
                 'email' => $this->user->email,
             ],
-
             'category' => [
-                'id' => $this->category->id,
-                'category_name' => $this->category->category_name,
-                'description' => $this->category->description,
-                'category_slug' => $this->category->category_slug,
+                'category' => $this->category->category_name ?? null,
+                'category_slug' => $this->category->category_slug ?? null,
             ],
         ];
     }

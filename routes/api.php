@@ -8,6 +8,7 @@ use App\Http\Controllers\Products\ShowProductController;
 use App\Http\Controllers\Products\SingleProductController;
 use App\Http\Controllers\Products\StoreProductController;
 use App\Http\Controllers\Products\UpdateProductController;
+use App\Http\Controllers\Products\UpdateProductImageController;
 use App\Http\Controllers\User\Admin\AccountTypeController;
 use App\Http\Controllers\User\Admin\DestroyUserAdminController;
 use App\Http\Controllers\User\Admin\EditUserAdminController;
@@ -41,6 +42,9 @@ Route::prefix('v1')->group(function () {
             return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
         });
         Route::patch('update/{product}', UpdateProductController::class);
+        Route::put('update/{product}/images', UpdateProductImageController::class)->missing(function () {
+            return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
+        });
         Route::delete('delete/{product}', DestroyProductController::class)->missing(function () {
             return ApiResponse::error(ApiMessages::PRODUCT_NOT_FOUND);
         });

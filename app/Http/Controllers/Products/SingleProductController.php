@@ -20,13 +20,11 @@ class SingleProductController extends Controller
     {
         $this->authorize('view', $product);
 
-        if (! $product) {
-            return ApiResponse::error();
-        }
-
         return ApiResponse::success(
             ApiMessages::PRODUCT_FETCHED,
-            [ProductResource::make($product)]
+            [
+                'product' => ProductResource::make($product),
+            ]
         );
     }
 }
