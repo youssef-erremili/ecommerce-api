@@ -12,7 +12,7 @@ trait GenerateProductSlug
         do {
             $slug = Str::slug($name).'-'.Str::random(8);
         } while (
-            Product::where('slug', $slug)->exists()
+            Product::query()->where('slug', $slug)->exists()
         );
 
         return $slug;

@@ -13,7 +13,6 @@ use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ProductService implements ProductServiceInterface
@@ -39,7 +38,6 @@ class ProductService implements ProductServiceInterface
     {
         // 1 handle image upload
         $data['product_images'] = $this->upload($data['product_images']);
-        $data['slug'] = $this->slug($data['product_name']);
 
         // 2 store product in db
         $holder = $user->products()
@@ -62,7 +60,6 @@ class ProductService implements ProductServiceInterface
         $isDeleted = $product->delete();
 
         if (! $isDeleted) {
-            Log::error('Service Error: '.ApiMessages::PRODUCT_DELETION_FAILED);
             throw new Exception(ApiMessages::AN_ERROR_OCCURRED);
         }
 
