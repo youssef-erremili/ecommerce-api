@@ -9,7 +9,7 @@ class ApiMessages
 
     public const string ERROR = 'error';
 
-    public const string NOT_FOUND = 'not_found';
+    public const string RESOURCE_NOT_FOUND = 'The requested resource could not be found.';
 
     // Auth
     public const string AUTH_SUCCESSFUL_LOGIN = 'Login successful. Welcome back!';
