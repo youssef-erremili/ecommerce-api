@@ -66,4 +66,9 @@ Route::prefix('v1')->group(function () {
         Route::delete('/bulk-delete', BulkDestroyWishListsController::class);
     });
 
+    // add to cart routes
+    Route::middleware('auth:sanctum')->prefix('carts')->group(function () {
+        Route::post('/{product}/create', CreateCartController::class);
+    });
+
 });
