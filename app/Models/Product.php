@@ -60,4 +60,9 @@ class Product extends Model
     {
         return $this->HasMany(Wishlist::class);
     }
+
+    public function carts(): HasMany
+    {
+        return $this->hasMany(Cart::class);
+    }
 }
