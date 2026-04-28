@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Carts\CreateCartController;
+use App\Http\Controllers\Carts\DestroyCartController;
 use App\Http\Controllers\Products\DestroyProductController;
 use App\Http\Controllers\Products\ShowProductController;
 use App\Http\Controllers\Products\SingleProductController;
@@ -69,6 +70,7 @@ Route::prefix('v1')->group(function () {
     // add to cart routes
     Route::middleware('auth:sanctum')->prefix('carts')->group(function () {
         Route::post('/{product}/create', CreateCartController::class);
+        Route::delete('/{cart}/delete', DestroyCartController::class);
     });
 
 });

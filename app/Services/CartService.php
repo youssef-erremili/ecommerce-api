@@ -5,8 +5,10 @@ namespace App\Services;
 use App\Contracts\Services\CartServiceInterface;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Support\ApiMessages;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use LogicException;
 use Throwable;
 
 class CartService implements CartServiceInterface
@@ -27,6 +29,7 @@ class CartService implements CartServiceInterface
                 ->first();
 
             if ($item) {
+                /** @var Cart $item */
                 $item->increment('quantity', $quantity);
 
                 return $item->fresh()->load('user', 'product');
@@ -37,5 +40,16 @@ class CartService implements CartServiceInterface
                 'quantity' => $quantity,
             ])->load('user', 'product');
         });
+    }
+
+    public function destroy(Cart $cart): Cart
+    {
+        $holder = $cart->delete();
+
+        if (! $holder) {
+            throw new LogicException(ApiMessages::AN_ERROR_OCCURRED);
+        }
+
+        return $cart;
     }
 }
