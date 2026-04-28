@@ -8,4 +8,6 @@ use App\Models\Product;
 interface CartServiceInterface
 {
     public function addToCart(Product $product, array $cart): Cart;
+
+    public function destroy(Cart $cart): Cart;
 }
