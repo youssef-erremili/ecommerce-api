@@ -86,6 +86,6 @@ class WishlistService implements WishlistServiceInterface
             throw new Exception(ApiMessages::AN_ERROR_OCCURRED);
         }
 
-        return true;
+        return $holder;
     }
 }

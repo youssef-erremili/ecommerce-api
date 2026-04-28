@@ -33,6 +33,5 @@ class BulkDestroyWishListsController extends Controller
         } catch (Exception $exception) {
             return ApiResponse::error($exception->getMessage());
         }
-
     }
 }

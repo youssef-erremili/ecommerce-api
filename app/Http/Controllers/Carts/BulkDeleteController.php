@@ -7,24 +7,28 @@ use App\Models\Cart;
 use App\Services\CartService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use LogicException;
+use Illuminate\Http\Request;
 
-class DestroyCartController extends Controller
+class BulkDeleteController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __invoke(Cart $cart, CartService $service)
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(CartService $service)
     {
         try {
-            $this->authorize('delete', $cart);
-
-            $service->remove($cart);
+            $this->authorize('deleteAny', Cart::class);
+            $service->clear();
 
             return ApiResponse::success(
-                ApiMessages::ACTION_COMPLETED,
+                ApiMessages::ACTION_COMPLETED
             );
-        } catch (LogicException $exception) {
+
+        } catch (Exception $exception) {
             return ApiResponse::error($exception->getMessage());
         }
     }

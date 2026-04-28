@@ -9,5 +9,7 @@ interface CartServiceInterface
 {
     public function addToCart(Product $product, array $cart): Cart;
 
-    public function destroy(Cart $cart): Cart;
+    public function remove(Cart $cart): Cart;
+
+    public function clear(): bool;
 }

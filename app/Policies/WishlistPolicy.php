@@ -24,7 +24,7 @@ class WishlistPolicy
         return $user->id === $wishlist->user_id;
     }
 
-    public function deleteAny(User $user): bool
+    public function deleteAny(): bool
     {
         return auth()->check();
     }

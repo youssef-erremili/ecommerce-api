@@ -30,4 +30,9 @@ class CartPolicy
     {
         return $user->id === $cart->user_id;
     }
+
+    public function deleteAny(): bool
+    {
+        return auth()->check();
+    }
 }

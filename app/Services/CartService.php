@@ -42,7 +42,7 @@ class CartService implements CartServiceInterface
         });
     }
 
-    public function destroy(Cart $cart): Cart
+    public function remove(Cart $cart): Cart
     {
         $holder = $cart->delete();
 
@@ -51,5 +51,27 @@ class CartService implements CartServiceInterface
         }
 
         return $cart;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function clear(): bool
+    {
+        $isCartEmpty = auth()->user()->carts()->count();
+
+        if (empty($isCartEmpty)) {
+            throw new Exception(ApiMessages::CART_IS_EMPTY);
+        }
+
+        $holder = Cart::query()
+            ->where('user_id', auth()->user()->id)
+            ->delete();
+
+        if (! $holder) {
+            throw new Exception(ApiMessages::CLEAR_CART_FAILED);
+        }
+
+        return $holder;
     }
 }
