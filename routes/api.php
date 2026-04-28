@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Carts\BulkDeleteController;
 use App\Http\Controllers\Carts\CreateCartController;
 use App\Http\Controllers\Carts\DestroyCartController;
+use App\Http\Controllers\Carts\ListCartController;
 use App\Http\Controllers\Products\DestroyProductController;
 use App\Http\Controllers\Products\ShowProductController;
 use App\Http\Controllers\Products\SingleProductController;
@@ -62,14 +63,15 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::middleware('auth:sanctum')->prefix('wishlist')->group(function () {
-        Route::post('store', StoreWishListsController::class);
         Route::get('lists', ListsWishListsController::class);
+        Route::post('store', StoreWishListsController::class);
         Route::delete('delete/{wishlist}', DestroyWishListController::class);
         Route::delete('/bulk-delete', BulkDestroyWishListsController::class);
     });
 
     // add to cart routes
     Route::middleware('auth:sanctum')->prefix('carts')->group(function () {
+        Route::get('/lists', ListCartController::class);
         Route::post('/{product}/create', CreateCartController::class);
         Route::delete('/{cart}/delete', DestroyCartController::class);
         Route::delete('/bulk-delete', BulkDeleteController::class);

@@ -3,26 +3,33 @@
 namespace App\Http\Controllers\Carts;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Cart\CreateCartRequest;
 use App\Http\Resources\CartResource;
-use App\Models\Product;
+use App\Models\Cart;
 use App\Services\CartService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 
-class CreateCartController extends Controller
+class ListCartController extends Controller
 {
-    public function __invoke(CreateCartRequest $request, Product $product, CartService $service)
+    use AuthorizesRequests;
+
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(CartService $service)
     {
         try {
-            $data = $request->validated();
-            $cart = $service->addToCart($product, $data);
+            // $this->authorize('viewAny', Cart::class);
+
+            $cart = $service->getCartItems();
 
             return ApiResponse::success(
                 ApiMessages::ACTION_COMPLETED,
                 [
-                    'cart' => CartResource::make($cart)->resolve(),
+                    'cart' => CartResource::collection($cart),
                 ]
             );
         } catch (Exception $exception) {

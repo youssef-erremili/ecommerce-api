@@ -7,8 +7,10 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Support\ApiMessages;
 use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use LogicException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class CartService implements CartServiceInterface
@@ -70,6 +72,23 @@ class CartService implements CartServiceInterface
 
         if (! $holder) {
             throw new Exception(ApiMessages::CLEAR_CART_FAILED);
+        }
+
+        return $holder;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getCartItems(): Collection
+    {
+        $holder = auth()->user()
+            ->carts()
+            ->with('user')
+            ->get();
+
+        if (empty($holder)) {
+            throw new NotFoundHttpException(ApiMessages::CART_IS_EMPTY);
         }
 
         return $holder;
