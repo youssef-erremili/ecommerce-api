@@ -7,8 +7,6 @@ use App\Services\CartService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
 
 class BulkDeleteController extends Controller
 {
