@@ -14,16 +14,12 @@ use Illuminate\Http\Request;
 
 class ListCartController extends Controller
 {
-    use AuthorizesRequests;
-
     /**
      * Handle the incoming request.
      */
     public function __invoke(CartService $service)
     {
         try {
-            // $this->authorize('viewAny', Cart::class);
-
             $cart = $service->getCartItems();
 
             return ApiResponse::success(
