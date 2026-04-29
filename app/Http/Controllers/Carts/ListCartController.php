@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Carts;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CartResource;
-use App\Models\Cart;
 use App\Services\CartService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
 
 class ListCartController extends Controller
 {
