@@ -77,5 +77,7 @@ class ApiMessages
     public const string WISHLIST_EMPTY = 'A Wishlist is empty.';
 
     // cart
-    public const string PRODUCT_ALREADY_EXISTS_IN_CART = 'this product is already exists in your cart.';
+    public const string CLEAR_CART_FAILED = 'Unable to clear the cart at the moment. Please try again later.';
+
+    public const string CART_IS_EMPTY = 'There are no items in your cart.';
 }

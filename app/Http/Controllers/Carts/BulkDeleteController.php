@@ -1,35 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\WishLists;
+namespace App\Http\Controllers\Carts;
 
 use App\Http\Controllers\Controller;
-use App\Models\Wishlist;
-use App\Services\WishlistService;
+use App\Services\CartService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
-class BulkDestroyWishListsController extends Controller
+class BulkDeleteController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    use AuthorizesRequests;
-
-    public function __invoke(Request $request, WishlistService $service)
+    public function __invoke(CartService $service)
     {
         try {
-            $this->authorize('deleteAny', Wishlist::class);
-
-            $ids = $request->array('ids');
-            $service->clear($ids);
+            $service->clear();
 
             return ApiResponse::success(
                 ApiMessages::ACTION_COMPLETED
             );
-
         } catch (Exception $exception) {
             return ApiResponse::error($exception->getMessage());
         }

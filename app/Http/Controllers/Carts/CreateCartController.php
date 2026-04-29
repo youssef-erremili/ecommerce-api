@@ -9,7 +9,7 @@ use App\Models\Product;
 use App\Services\CartService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
-use Throwable;
+use Exception;
 
 class CreateCartController extends Controller
 {
@@ -25,7 +25,7 @@ class CreateCartController extends Controller
                     'cart' => CartResource::make($cart)->resolve(),
                 ]
             );
-        } catch (Throwable $exception) {
+        } catch (Exception $exception) {
             return ApiResponse::error($exception->getMessage());
         }
     }
