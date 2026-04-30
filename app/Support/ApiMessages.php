@@ -39,6 +39,10 @@ class ApiMessages
 
     public const string USER_DELETE_FAILED = 'Failed to delete your account. Please try again.';
 
+    public const string FIle_NOT_FOUND = 'Profile image file is missing';
+
+    public const string FAILED_UPDATE_PROFILE_IMAGE = 'Something had happened while updating your profile image';
+
     // Product
     public const string PRODUCT_FETCHED = 'Product retrieved successfully.';
 

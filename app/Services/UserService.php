@@ -6,6 +6,7 @@ use App\Contracts\Services\UserServiceInterface;
 use App\Enums\AccountType;
 use App\Models\User;
 use App\Support\ApiMessages;
+use App\Traits\FileManager;
 use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 
 class UserService implements UserServiceInterface
 {
+    use FileManager;
+
     /**
      * Create a new class instance.
      *
@@ -112,7 +115,7 @@ class UserService implements UserServiceInterface
             throw new Exception(ApiMessages::USER_DELETE_FAILED);
         }
 
-        return true;
+        return $holder;
     }
 
     /**
@@ -128,6 +131,26 @@ class UserService implements UserServiceInterface
             throw new Exception(ApiMessages::AN_ERROR_OCCURRED);
         }
 
-        return true;
+        return $holder;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function updateUserProfileImage(array $file): array
+    {
+        $processUploadImage = $this->upload($file, auth()->user()->getProfileImageDirectory());
+
+        $holder = auth()->user()->update([
+            'profile' => $processUploadImage[0],
+        ]);
+
+        if (! $holder || ! $processUploadImage) {
+            throw new Exception(ApiMessages::FAILED_UPDATE_PROFILE_IMAGE);
+        }
+
+        return [
+            $processUploadImage,
+        ];
     }
 }

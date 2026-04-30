@@ -30,6 +30,8 @@ class Product extends Model
 {
     use HasApiTokens, HasFactory, SoftDeletes;
 
+    public const string PRODUCT_IMAGES_DIR = 'product-images';
+
     protected function casts(): array
     {
         return [
@@ -64,5 +66,10 @@ class Product extends Model
     public function carts(): HasMany
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function getProductImagesDirectory(): string
+    {
+        return self::PRODUCT_IMAGES_DIR.' '.$this->user()->id;
     }
 }
