@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\User;
 use App\Observers\ProductObserver;
 use App\Observers\UserObserver;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,7 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(Authenticatable::class, function ($app) {
+            return Auth::user();
+        });
     }
 
     /**

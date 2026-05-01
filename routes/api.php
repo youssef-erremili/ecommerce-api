@@ -21,6 +21,7 @@ use App\Http\Controllers\User\RegularUsers\AuthenticatedUserController;
 use App\Http\Controllers\User\RegularUsers\DestroyUserController;
 use App\Http\Controllers\User\RegularUsers\EditUserController;
 use App\Http\Controllers\User\RegularUsers\ResetPasswordController;
+use App\Http\Controllers\User\RegularUsers\UpdateUserProfileController;
 use App\Http\Controllers\WishLists\BulkDestroyWishListsController;
 use App\Http\Controllers\WishLists\DestroyWishListController;
 use App\Http\Controllers\WishLists\ListsWishListsController;
@@ -57,6 +58,7 @@ Route::prefix('v1')->group(function () {
 
         // for Regular
         Route::get('/me', AuthenticatedUserController::class);
+        Route::patch('/profile-image', UpdateUserProfileController::class);
         Route::patch('/edit/{user}', EditUserController::class);
         Route::delete('/delete/{user}', DestroyUserController::class);
         Route::patch('/reset-password', ResetPasswordController::class);

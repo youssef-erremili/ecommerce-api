@@ -13,12 +13,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['first_name', 'last_name', 'email', 'password', 'phone_number', 'account_type', 'physical_address'])]
+#[Fillable(['first_name', 'last_name', 'email', 'profile', 'password', 'phone_number', 'account_type', 'physical_address'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+
+    public const string PROFILE_IMAGE_DIR = 'profile-image';
 
     /**
      * Get the attributes that should be cast.
@@ -54,5 +56,15 @@ class User extends Authenticatable
     public function carts(): HasMany
     {
         return $this->HasMany(Cart::class);
+    }
+
+    public function getProfileImage(): array|string
+    {
+        return $this->profile ?? asset('images/deafult-user.png');
+    }
+
+    public function getProfileImageDirectory(): string
+    {
+        return self::PROFILE_IMAGE_DIR.'-'.$this->id;
     }
 }
