@@ -23,7 +23,7 @@ class UpdateProfileImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile_image' => ['required', 'file', 'mimetypes:image/jpeg,image/png,image/jpg', 'max:2048', 'min:1'],
+            'profile_image' => ['required', 'image', 'mimetypes:image/jpeg,image/png,image/jpg', 'max:2048'],
         ];
     }
 }
