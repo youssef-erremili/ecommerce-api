@@ -21,5 +21,5 @@ interface UserServiceInterface
 
     public function resetPassword(User $user, mixed $newPassword): bool;
 
-    public function updateUserProfileImage(array $file): array;
+    public function updateUserProfileImage(array $file, string $path): array;
 }

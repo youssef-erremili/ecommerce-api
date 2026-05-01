@@ -3,26 +3,29 @@
 namespace App\Http\Controllers\User\RegularUsers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\UpdateProfileImageRequest;
+use App\Models\User;
 use App\Services\UserService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\JsonResponse;
 
 class UpdateUserProfileController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * @param  User  $user
      *
      * @throws Exception
      */
-    public function __invoke(Request $request, UserService $service)
+    public function __invoke(UpdateProfileImageRequest $request, UserService $service, Authenticatable $user): JsonResponse
     {
         try {
-            $profileImage = $request->validate([
-                'profile_image' => ['required', 'file', 'mimetypes:image/jpeg,image/png,image/jpg', 'max:2048'],
-            ]);
-            [$processUploadImage] = $service->updateUserProfileImage($profileImage);
+            [$processUploadImage] = $service->updateUserProfileImage(
+                $request->validated(),
+                $user->getProfileImageDirectory()
+            );
 
             return ApiResponse::success(
                 ApiMessages::ACTION_COMPLETED,

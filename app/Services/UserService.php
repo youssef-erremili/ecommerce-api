@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class UserService implements UserServiceInterface
 {
@@ -25,9 +26,13 @@ class UserService implements UserServiceInterface
      */
     private Request $request;
 
-    public function __construct(Request $request)
+    /** @var User */
+    private Authenticatable|User $user;
+
+    public function __construct(Request $request, Authenticatable $user)
     {
-        return $this->request = $request;
+        $this->request = $request;
+        $this->user = $user;
     }
 
     public function paginate(int $perPage = 20): LengthAwarePaginator
@@ -137,15 +142,30 @@ class UserService implements UserServiceInterface
     /**
      * @throws Exception
      */
-    public function updateUserProfileImage(array $file): array
+    public function updateUserProfileImage(array $file, string $path): array
     {
-        $processUploadImage = $this->upload($file, auth()->user()->getProfileImageDirectory());
+        $base = config('filesystems.disks.supabase.url_base');
+        $path_dir = str_replace($base, '', $this->user->profile);
 
-        $holder = auth()->user()->update([
+        // check if user has already old image and column not null
+        // and this works only if user has profile already
+        if ($this->user->profile) {
+            if (Storage::disk('supabase')->exists($path_dir)) {
+                Storage::disk('supabase')->delete($path_dir);
+            }
+        }
+
+        $processUploadImage = $this->upload($file, $path);
+
+        if (! $processUploadImage) {
+            throw new Exception(ApiMessages::FAILED_UPDATE_PROFILE_IMAGE);
+        }
+
+        $holder = $this->user->update([
             'profile' => $processUploadImage[0],
         ]);
 
-        if (! $holder || ! $processUploadImage) {
+        if (! $holder) {
             throw new Exception(ApiMessages::FAILED_UPDATE_PROFILE_IMAGE);
         }
 
