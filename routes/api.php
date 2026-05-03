@@ -8,6 +8,7 @@ use App\Http\Controllers\Carts\CreateCartController;
 use App\Http\Controllers\Carts\DestroyCartController;
 use App\Http\Controllers\Carts\ListCartController;
 use App\Http\Controllers\Category\CreateCategoryController;
+use App\Http\Controllers\Category\ListCategoriesController;
 use App\Http\Controllers\Products\DestroyProductController;
 use App\Http\Controllers\Products\ShowProductController;
 use App\Http\Controllers\Products\SingleProductController;
@@ -82,6 +83,7 @@ Route::prefix('v1')->group(function () {
 
     // add category routes
     Route::middleware(['auth:sanctum', 'can:admin-access'])->prefix('category')->group(function () {
+        Route::post('/lists', ListCategoriesController::class);
         Route::post('/create', CreateCategoryController::class);
     });
 
