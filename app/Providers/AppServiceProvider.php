@@ -35,5 +35,13 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('admin-access', function (User $user) {
             return $user->account_type === AccountType::ADMIN;
         });
+
+        Gate::define('vendor-access', function (User $user) {
+            return $user->account_type === AccountType::VENDOR;
+        });
+
+        Gate::define('admin-or-vendor', function (User $user) {
+            return $user->account_type === AccountType::ADMIN || $user->account_type === AccountType::VENDOR;
+        });
     }
 }

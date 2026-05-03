@@ -84,4 +84,7 @@ class ApiMessages
     public const string CLEAR_CART_FAILED = 'Unable to clear the cart at the moment. Please try again later.';
 
     public const string CART_IS_EMPTY = 'There are no items in your cart.';
+
+    // category
+    // public const string
 }
