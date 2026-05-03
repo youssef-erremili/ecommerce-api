@@ -22,6 +22,8 @@ class User extends Authenticatable
 
     public const string PROFILE_IMAGE_DIR = 'profile-image';
 
+    public const string PRODUCT_IMAGES_DIR = 'product-images';
+
     /**
      * Get the attributes that should be cast.
      *
@@ -66,5 +68,10 @@ class User extends Authenticatable
     public function getProfileImageDirectory(): string
     {
         return self::PROFILE_IMAGE_DIR.'-'.$this->id;
+    }
+
+    public function getProductImagesDirectory(): string
+    {
+        return self::PRODUCT_IMAGES_DIR.'-'.$this->id;
     }
 }

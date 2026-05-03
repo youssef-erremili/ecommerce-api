@@ -27,7 +27,7 @@ class UserService implements UserServiceInterface
     private Request $request;
 
     /** @var User */
-    private Authenticatable|User $user;
+    private User|Authenticatable $user;
 
     public function __construct(Request $request, Authenticatable $user)
     {

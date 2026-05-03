@@ -3,18 +3,18 @@
 namespace App\Observers;
 
 use App\Models\Product;
-use App\Traits\GenerateProductSlug;
+use App\Traits\GenerateSlug;
 
 class ProductObserver
 {
-    use GenerateProductSlug;
+    use GenerateSlug;
 
     /**
      * Handle the Product "creating" event.
      */
     public function creating(Product $product): void
     {
-        $product->slug = $this->slug($product->product_name);
+        $product->slug = $this->slug($product->product_name, Product::class);
     }
 
     /**
@@ -23,9 +23,7 @@ class ProductObserver
     public function updating(Product $product): void
     {
         if ($product->isDirty('product_name')) {
-            $product->slug = $this->slug($product->product_name);
+            $product->slug = $this->slug($product->product_name, Product::class);
         }
     }
-
-    public function deleted(Product $product): void {}
 }

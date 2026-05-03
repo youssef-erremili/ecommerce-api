@@ -18,7 +18,7 @@ class ApiResponse
             'message' => $message,
             'type' => ApiMessages::SUCCESS,
             'data' => $data,
-        ], $status);
+        ], (int) $status);
     }
 
     public static function error(
@@ -28,6 +28,6 @@ class ApiResponse
         return response()->json([
             'message' => $message,
             'type' => ApiMessages::ERROR,
-        ], $status);
+        ], (int) $status);
     }
 }

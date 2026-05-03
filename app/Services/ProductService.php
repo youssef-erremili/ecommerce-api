@@ -8,8 +8,8 @@ use App\Models\Product;
 use App\Models\User;
 use App\Support\ApiMessages;
 use App\Traits\FileManager;
-use App\Traits\GenerateProductSlug;
 use Exception;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -19,16 +19,19 @@ class ProductService implements ProductServiceInterface
 {
     use AuthorizesRequests;
     use FileManager;
-    use GenerateProductSlug;
 
     /**
      * Create a new product instance.
      */
     private Request $request;
 
-    public function __construct(Request $request)
+    /** @var User */
+    private User|Authenticatable $user;
+
+    public function __construct(Request $request, Authenticatable $user)
     {
         $this->request = $request;
+        $this->user = $user;
     }
 
     /**
@@ -37,7 +40,13 @@ class ProductService implements ProductServiceInterface
     public function create(User $user, array $data): Product
     {
         // 1 handle image upload
-        $data['product_images'] = $this->upload($data['product_images']);
+        $uploadImages = $this->upload($data['product_images'], $this->user->getProductImagesDirectory());
+
+        if (! $uploadImages) {
+            throw new Exception(ApiMessages::PRODUCT_CREATION_FAILED);
+        }
+
+        $data['product_images'] = $uploadImages;
 
         // 2 store product in db
         $holder = $user->products()
@@ -104,7 +113,11 @@ class ProductService implements ProductServiceInterface
             }
         }
 
-        $URLs = $this->upload($images['product_images']);
+        $URLs = $this->upload($images['product_images'], $this->user->getProductImagesDirectory());
+
+        if (! $URLs) {
+            throw new Exception(ApiMessages::PRODUCT_UPDATE_FAILED);
+        }
 
         $holder = $product->update([
             'product_images' => $URLs,
