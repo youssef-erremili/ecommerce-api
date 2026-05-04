@@ -53,8 +53,23 @@ class CategoryService implements CategoryServiceInterface
         // TODO: Implement update() method.
     }
 
-    public function toggleStatus(Category $category): bool
+    /**
+     * @throws Exception
+     */
+    public function toggleStatus(Category $category, bool $status): Category
     {
-        // TODO: Implement toggleStatus() method.
+        if ($category->is_active === $status) {
+            throw new Exception(ApiMessages::CANNOT_REUSE_STATUS);
+        }
+
+        $holder = $category->updateQuietly([
+            'is_active' => $status,
+        ]);
+
+        if (! $holder) {
+            throw new Exception(ApiMessages::AN_ERROR_OCCURRED);
+        }
+
+        return $category;
     }
 }

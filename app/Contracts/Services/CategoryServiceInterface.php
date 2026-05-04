@@ -15,5 +15,5 @@ interface CategoryServiceInterface
 
     public function update(Category $category): bool;
 
-    public function toggleStatus(Category $category): bool;
+    public function toggleStatus(Category $category, bool $status): Category;
 }

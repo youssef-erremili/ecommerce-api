@@ -86,5 +86,5 @@ class ApiMessages
     public const string CART_IS_EMPTY = 'There are no items in your cart.';
 
     // category
-    // public const string
+    public const string CANNOT_REUSE_STATUS = 'The new status must be different from the current status.';
 }
