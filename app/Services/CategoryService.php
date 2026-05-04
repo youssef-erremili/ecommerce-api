@@ -6,7 +6,7 @@ use App\Contracts\Services\CategoryServiceInterface;
 use App\Models\Category;
 use App\Support\ApiMessages;
 use Exception;
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class CategoryService implements CategoryServiceInterface
@@ -16,9 +16,9 @@ class CategoryService implements CategoryServiceInterface
      *
      * @throws Exception
      */
-    public function getCategories(): Collection
+    public function paginate(int $perPage = 20): LengthAwarePaginator
     {
-        $holder = DB::table('categories')->get();
+        $holder = DB::table('categories')->paginate($perPage);
 
         if (! $holder) {
             throw new Exception(ApiMessages::AN_ERROR_OCCURRED);

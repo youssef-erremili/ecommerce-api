@@ -3,11 +3,11 @@
 namespace App\Contracts\Services;
 
 use App\Models\Category;
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface CategoryServiceInterface
 {
-    public function getCategories(): Collection;
+    public function paginate(int $perPage = 20): LengthAwarePaginator;
 
     public function create(array $data): Category;
 

@@ -4,9 +4,14 @@ namespace App\Models;
 
 use App\Traits\GenerateSlug;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @method static factory(int $int)
+ * @method static max(string $string)
+ */
 #[Fillable([
     'category_name',
     'slug',
@@ -16,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 ])]
 class Category extends Model
 {
-    use GenerateSlug;
+    use GenerateSlug, HasFactory;
 
     private const int SORT_ORDER_INCREMENT = 1;
 
