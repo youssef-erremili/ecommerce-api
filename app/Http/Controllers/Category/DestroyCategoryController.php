@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Http\Controllers\Category;
+
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Services\CategoryService;
+use App\Support\ApiMessages;
+use App\Support\ApiResponse;
+use Exception;
+use Illuminate\Http\Request;
+
+class DestroyCategoryController extends Controller
+{
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(Category $category, CategoryService $service)
+    {
+        try {
+            $service->delete($category);
+
+            return ApiResponse::success(ApiMessages::ACTION_COMPLETED);
+
+        } catch (Exception $exception) {
+            return ApiResponse::error($exception->getMessage());
+        }
+    }
+}

@@ -17,12 +17,10 @@ class CategoryService implements CategoryServiceInterface
      *
      * @throws Exception
      */
-    protected Product $product;
-
-    public function __construct(Product $product)
-    {
-        $this->product = $product;
-    }
+    public function __construct(
+        protected Product $product,
+        protected Category $category
+    ) {}
 
     /**
      * @throws Exception
@@ -54,7 +52,21 @@ class CategoryService implements CategoryServiceInterface
         return $holder;
     }
 
-    public function delete(Category $category): bool {}
+    /**
+     * @throws Exception
+     */
+    public function delete(Category $category): bool
+    {
+        $this->deleteOrUpdate('delete', $category);
+
+        $holder = $category->delete();
+
+        if (! $holder) {
+            throw new Exception(ApiMessages::AN_ERROR_OCCURRED);
+        }
+
+        return $holder;
+    }
 
     /**
      * @throws Exception
@@ -62,11 +74,7 @@ class CategoryService implements CategoryServiceInterface
     public function update(Category $category, array $data): bool
     {
         // I want to prevent update category if this category belongs to any product
-        $hasReservedCategory = Product::where('category_id', $category->id)->count();
-
-        if ($hasReservedCategory > 0) {
-            throw new Exception(ApiMessages::CANNOT_UPDATE_CATEGORY);
-        }
+        $this->deleteOrUpdate('update', $category);
 
         $holder = $category->update($data);
 
@@ -95,5 +103,19 @@ class CategoryService implements CategoryServiceInterface
         }
 
         return $category;
+    }
+
+    private function deleteOrUpdate(string $action, Category $category): void
+    {
+        $message = ($action === 'update')
+                ? ApiMessages::CANNOT_UPDATE_CATEGORY
+                : ApiMessages::CANNOT_DELETE_CATEGORY;
+
+        // I want to prevent UPDATE or DELETE category if this category belongs to any product
+        $hasReservedCategory = Product::whereBelongsTo($category)->count();
+
+        if ($hasReservedCategory > 0) {
+            abort(422, $message);
+        }
     }
 }
