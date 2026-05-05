@@ -8,6 +8,7 @@ use App\Http\Controllers\Carts\CreateCartController;
 use App\Http\Controllers\Carts\DestroyCartController;
 use App\Http\Controllers\Carts\ListCartController;
 use App\Http\Controllers\Category\CreateCategoryController;
+use App\Http\Controllers\Category\DestroyCategoryController;
 use App\Http\Controllers\Category\ListCategoriesController;
 use App\Http\Controllers\Category\ToggleStatusCategoryController;
 use App\Http\Controllers\Category\UpdateCategoryController;
@@ -89,6 +90,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/create', CreateCategoryController::class);
         Route::patch('/{category}/toggle-status', ToggleStatusCategoryController::class);
         Route::patch('/{category}/update', UpdateCategoryController::class);
+        Route::delete('/{category}/delete', DestroyCategoryController::class);
     });
 
 });

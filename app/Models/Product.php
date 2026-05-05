@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -66,7 +67,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder<static>|Product withTrashed(bool $withTrashed = true)
  * @method static Builder<static>|Product withoutTrashed()
  *
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 #[Fillable([
     'user_id',

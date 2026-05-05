@@ -89,4 +89,6 @@ class ApiMessages
     public const string CANNOT_REUSE_STATUS = 'The new status must be different from the current status.';
 
     public const string CANNOT_UPDATE_CATEGORY = 'This category cannot be updated because it is associated with existing products.';
+
+    public const string CANNOT_DELETE_CATEGORY = 'This category cannot be deleted because it is associated with existing products.';
 }
