@@ -13,7 +13,7 @@ interface CategoryServiceInterface
 
     public function delete(Category $category): bool;
 
-    public function update(Category $category): bool;
+    public function update(Category $category, array $data): bool;
 
     public function toggleStatus(Category $category, bool $status): Category;
 }

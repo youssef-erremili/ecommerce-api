@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Contracts\Services\CategoryServiceInterface;
 use App\Models\Category;
+use App\Models\Product;
 use App\Support\ApiMessages;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -14,6 +15,16 @@ class CategoryService implements CategoryServiceInterface
     /**
      * Create a new class instance.
      *
+     * @throws Exception
+     */
+    protected Product $product;
+
+    public function __construct(Product $product)
+    {
+        $this->product = $product;
+    }
+
+    /**
      * @throws Exception
      */
     public function paginate(int $perPage = 20): LengthAwarePaginator
@@ -43,14 +54,27 @@ class CategoryService implements CategoryServiceInterface
         return $holder;
     }
 
-    public function delete(Category $category): bool
-    {
-        // TODO: Implement delete() method.
-    }
+    public function delete(Category $category): bool {}
 
-    public function update(Category $category): bool
+    /**
+     * @throws Exception
+     */
+    public function update(Category $category, array $data): bool
     {
-        // TODO: Implement update() method.
+        // I want to prevent update category if this category belongs to any product
+        $hasReservedCategory = Product::where('category_id', $category->id)->count();
+
+        if ($hasReservedCategory > 0) {
+            throw new Exception(ApiMessages::CANNOT_UPDATE_CATEGORY);
+        }
+
+        $holder = $category->update($data);
+
+        if (! $holder) {
+            throw new Exception(ApiMessages::AN_ERROR_OCCURRED);
+        }
+
+        return $holder;
     }
 
     /**
