@@ -84,4 +84,9 @@ class ApiMessages
     public const string CLEAR_CART_FAILED = 'Unable to clear the cart at the moment. Please try again later.';
 
     public const string CART_IS_EMPTY = 'There are no items in your cart.';
+
+    // category
+    public const string CANNOT_REUSE_STATUS = 'The new status must be different from the current status.';
+
+    public const string CANNOT_UPDATE_CATEGORY = 'This category cannot be updated because it is associated with existing products.';
 }

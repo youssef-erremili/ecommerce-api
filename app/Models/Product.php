@@ -3,16 +3,70 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
 
 /**
  * @method static OwnedByUser()
  * @method static find(int $productId)
+ * @method whereBelongsTo(Category $category)
+ *
+ * @mixin Builder
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $category_id
+ * @property string $product_name
+ * @property string $slug
+ * @property string $description
+ * @property numeric $price
+ * @property int $quantity
+ * @property numeric $discount
+ * @property bool $is_active
+ * @property array<array-key, mixed>|null $product_images
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Collection<int, Cart> $carts
+ * @property-read int|null $carts_count
+ * @property-read Category $category
+ * @property-read Collection<int, PersonalAccessToken> $tokens
+ * @property-read int|null $tokens_count
+ * @property-read User|null $user
+ * @property-read Collection<int, Wishlist> $wishlist
+ * @property-read int|null $wishlist_count
+ *
+ * @method static \Database\Factories\ProductFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Product newModelQuery()
+ * @method static Builder<static>|Product newQuery()
+ * @method static Builder<static>|Product onlyTrashed()
+ * @method static Builder<static>|Product query()
+ * @method static Builder<static>|Product whereCategoryId($value)
+ * @method static Builder<static>|Product whereCreatedAt($value)
+ * @method static Builder<static>|Product whereDeletedAt($value)
+ * @method static Builder<static>|Product whereDescription($value)
+ * @method static Builder<static>|Product whereDiscount($value)
+ * @method static Builder<static>|Product whereId($value)
+ * @method static Builder<static>|Product whereIsActive($value)
+ * @method static Builder<static>|Product wherePrice($value)
+ * @method static Builder<static>|Product whereProductImages($value)
+ * @method static Builder<static>|Product whereProductName($value)
+ * @method static Builder<static>|Product whereQuantity($value)
+ * @method static Builder<static>|Product whereSlug($value)
+ * @method static Builder<static>|Product whereUpdatedAt($value)
+ * @method static Builder<static>|Product whereUserId($value)
+ * @method static Builder<static>|Product withTrashed(bool $withTrashed = true)
+ * @method static Builder<static>|Product withoutTrashed()
+ *
+ * @mixin \Eloquent
  */
 #[Fillable([
     'user_id',
@@ -29,8 +83,6 @@ use Laravel\Sanctum\HasApiTokens;
 class Product extends Model
 {
     use HasApiTokens, HasFactory, SoftDeletes;
-
-    public const string PRODUCT_IMAGES_DIR = 'product-images';
 
     protected function casts(): array
     {
@@ -66,10 +118,5 @@ class Product extends Model
     public function carts(): HasMany
     {
         return $this->hasMany(Cart::class);
-    }
-
-    public function getProductImagesDirectory(): string
-    {
-        return self::PRODUCT_IMAGES_DIR.' '.$this->user()->id;
     }
 }

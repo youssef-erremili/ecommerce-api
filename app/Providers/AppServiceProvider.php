@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Enums\AccountType;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
+use App\Observers\CategoryObserver;
 use App\Observers\ProductObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Authenticatable;
@@ -31,9 +33,18 @@ class AppServiceProvider extends ServiceProvider
     {
         User::observe(UserObserver::class);
         Product::observe(ProductObserver::class);
+        Category::observe(CategoryObserver::class);
 
         Gate::define('admin-access', function (User $user) {
             return $user->account_type === AccountType::ADMIN;
+        });
+
+        Gate::define('vendor-access', function (User $user) {
+            return $user->account_type === AccountType::VENDOR;
+        });
+
+        Gate::define('admin-or-vendor', function (User $user) {
+            return $user->account_type === AccountType::ADMIN || $user->account_type === AccountType::VENDOR;
         });
     }
 }

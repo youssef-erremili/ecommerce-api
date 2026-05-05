@@ -7,6 +7,10 @@ use App\Http\Controllers\Carts\BulkDeleteController;
 use App\Http\Controllers\Carts\CreateCartController;
 use App\Http\Controllers\Carts\DestroyCartController;
 use App\Http\Controllers\Carts\ListCartController;
+use App\Http\Controllers\Category\CreateCategoryController;
+use App\Http\Controllers\Category\ListCategoriesController;
+use App\Http\Controllers\Category\ToggleStatusCategoryController;
+use App\Http\Controllers\Category\UpdateCategoryController;
 use App\Http\Controllers\Products\DestroyProductController;
 use App\Http\Controllers\Products\ShowProductController;
 use App\Http\Controllers\Products\SingleProductController;
@@ -77,6 +81,14 @@ Route::prefix('v1')->group(function () {
         Route::post('/{product}/create', CreateCartController::class);
         Route::delete('/{cart}/delete', DestroyCartController::class);
         Route::delete('/bulk-delete', BulkDeleteController::class);
+    });
+
+    // add category routes
+    Route::middleware(['auth:sanctum', 'can:admin-access'])->prefix('category')->group(function () {
+        Route::get('/lists', ListCategoriesController::class);
+        Route::post('/create', CreateCategoryController::class);
+        Route::patch('/{category}/toggle-status', ToggleStatusCategoryController::class);
+        Route::patch('/{category}/update', UpdateCategoryController::class);
     });
 
 });
