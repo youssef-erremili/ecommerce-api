@@ -4,8 +4,10 @@ namespace App\Models;
 
 use App\Enums\AccountType;
 use Database\Factories\UserFactory;
+use Eloquent;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -65,8 +67,10 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
+ * @method static Builder active()
+ * @method static Builder topTierSeller()
  *
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 #[Fillable(['first_name', 'last_name', 'email', 'profile', 'password', 'phone_number', 'account_type', 'physical_address'])]
 #[Hidden(['password', 'remember_token'])]
@@ -128,5 +132,18 @@ class User extends Authenticatable
     public function getProductImagesDirectory(): string
     {
         return self::PRODUCT_IMAGES_DIR.'-'.$this->id;
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true)
+            ->where('account_type', AccountType::VENDOR)
+            ->whereNull('deleted_at');
+    }
+
+    public function scopeTopTierSeller(Builder $query): Builder
+    {
+        return $query->has('products', '>=', 10)
+            ->whereNull('deleted_at');
     }
 }

@@ -93,4 +93,5 @@ Route::prefix('v1')->group(function () {
         Route::delete('/{category}/delete', DestroyCategoryController::class);
     });
 
+    require __DIR__.'/home.php';
 });
