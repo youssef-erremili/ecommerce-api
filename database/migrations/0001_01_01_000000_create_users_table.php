@@ -17,14 +17,15 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
+            $table->string('profile')->nullable();
             $table->enum('account_type', array_column(AccountType::cases(), 'value'))->nullable();
             $table->string('physical_address')->nullable();
-            $table->string('profile')->nullable();
             $table->string('phone_number')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('slug')->unique();
             $table->boolean('is_active')->default(true);
             $table->rememberToken();
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
