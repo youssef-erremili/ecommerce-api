@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Product>
@@ -21,12 +22,12 @@ class ProductFactory extends Factory
             'user_id' => 1,
             'category_id' => 1,
             'product_name' => fake()->name,
-            'slug' => fake()->slug(7),
+            'slug' => Str::lower(fake()->slug(4)),
             'description' => fake()->realText(),
-            'price' => fake()->randomNumber(),
-            'quantity' => fake()->randomNumber(),
-            'discount' => fake()->randomNumber(),
-            'is_active' => fake()->boolean(),
+            'price' => fake()->randomFloat(2, 2),
+            'quantity' => fake()->randomNumber(2, true),
+            'discount' => fake()->randomNumber(2, true),
+            'is_active' => fake()->boolean(100),
             'created_at' => fake()->date(),
             'product_images' => [
                 'https://qxtagomijcgmgxfzpnmg.storage.supabase.co/storage/v1/s3/ProductsAssets/images/Y6cjhyG5frLTbgHXoWEz2si4R2jcefRtNwUbRZVO.png',
