@@ -45,6 +45,8 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property-read int|null $tokens_count
  * @property-read Collection<int, Wishlist> $wishlists
  * @property-read int|null $wishlists_count
+ * @property string $name
+ * @property string $slug
  *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
@@ -69,6 +71,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
  * @method static Builder active()
  * @method static Builder topTierSeller()
+ * @method static User products()
  *
  * @mixin Eloquent
  */
