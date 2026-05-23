@@ -15,6 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $slug
  * @property mixed $price
  * @property mixed $id
+ * @property mixed $category
  */
 class ProductResource extends JsonResource
 {
@@ -36,15 +37,20 @@ class ProductResource extends JsonResource
             'product_images' => collect($this->product_images)->map(function ($image) {
                 return $image;
             }),
-            'vendor' => [
-                'full_name' => $this->user->first_name.' '.$this->user->last_name,
-                'slug' => $this->user->slug,
-                'email_address' => $this->user->email,
-            ],
-            'category' => [
-                'category' => $this->category->category_name ?? null,
-                'category_slug' => $this->category->category_slug ?? null,
-            ],
+            'vendor' => $this->whenLoaded('user', function () {
+                return [
+                    'full_name' => $this->user->first_name.' '.$this->user->last_name,
+                    'slug' => $this->user->slug,
+                    'email_address' => $this->user->email,
+                ];
+            }),
+
+            'category' => $this->whenLoaded('category', function () {
+                return [
+                    'category' => $this->category->category_name,
+                    'category_slug' => $this->category->category_slug,
+                ];
+            }),
         ];
     }
 }
