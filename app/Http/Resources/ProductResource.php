@@ -5,6 +5,17 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property mixed $user
+ * @property mixed $product_images
+ * @property mixed $product_name
+ * @property mixed $discount
+ * @property mixed $quantity
+ * @property mixed $description
+ * @property mixed $slug
+ * @property mixed $price
+ * @property mixed $id
+ */
 class ProductResource extends JsonResource
 {
     /**
@@ -26,9 +37,9 @@ class ProductResource extends JsonResource
                 return $image;
             }),
             'vendor' => [
-                'first_name' => $this->user->first_name,
-                'last_name' => $this->user->last_name,
-                'email' => $this->user->email,
+                'full_name' => $this->user->first_name.' '.$this->user->last_name,
+                'slug' => $this->user->slug,
+                'email_address' => $this->user->email,
             ],
             'category' => [
                 'category' => $this->category->category_name ?? null,
