@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Enums\AccountType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -32,7 +31,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'phone_number' => fake()->phoneNumber(),
             'slug' => Str::lower(fake()->slug()),
-            'account_type' => AccountType::CUSTOMER->value,
+            'account_type' => fake()->randomElement(['customer', 'vendor']),
             'password' => static::$password ??= Hash::make('password123'),
             'remember_token' => Str::random(10),
         ];

@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -18,13 +20,15 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->name;
+
         return [
-            'user_id' => 1,
-            'category_id' => 1,
-            'product_name' => fake()->name,
-            'slug' => Str::lower(fake()->slug(4)),
+            'user_id' => fake()->randomElement(User::where('account_type', 'vendor')->pluck('id')->toArray()),
+            'category_id' => fake()->randomElement(Category::where('is_active', true)->pluck('id')->toArray()),
+            'product_name' => $name,
+            'slug' => Str::lower(Str::slug($name.'-'.fake()->slug(1))),
             'description' => fake()->realText(),
-            'price' => fake()->randomFloat(2, 2),
+            'price' => fake()->randomNumber(2, 2),
             'quantity' => fake()->randomNumber(2, true),
             'discount' => fake()->randomNumber(2, true),
             'is_active' => fake()->boolean(100),
