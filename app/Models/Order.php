@@ -45,6 +45,12 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereUserId($value)
  *
+ * @property string|null $payment_id
+ * @property string $phone_number
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Order wherePaymentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Order wherePhoneNumber($value)
+ *
  * @mixin \Eloquent
  */
 #[Fillable([

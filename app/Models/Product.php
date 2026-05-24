@@ -106,7 +106,7 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function scopeOwnedByUser($query)
+    public function scopeOwnedByUser(Builder|User $query): Builder|User
     {
         return $query->where('user_id', auth()->id());
     }

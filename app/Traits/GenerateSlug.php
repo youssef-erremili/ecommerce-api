@@ -9,7 +9,7 @@ trait GenerateSlug
     public function slug(string $name, $model): string
     {
         do {
-            $slug = Str::slug($name).'-'.Str::random(8);
+            $slug = Str::lower(Str::slug($name).'-'.Str::random(8));
         } while (
             $model::query()->where('slug', $slug)->exists()
         );
