@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
@@ -30,6 +31,7 @@ class RegisterController extends Controller
                 'token' => $token,
                 'user' => UserResource::make($user),
             ],
+            Response::HTTP_CREATED
         );
     }
 }
