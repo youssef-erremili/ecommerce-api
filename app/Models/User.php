@@ -46,6 +46,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property-read Collection<int, Wishlist> $wishlists
  * @property-read int|null $wishlists_count
  * @property string $name
+ * @property mixed|string $slug
  *
  * @b string $slug
  *
@@ -124,9 +125,9 @@ class User extends Authenticatable
         return $this->HasMany(Cart::class);
     }
 
-    public function getProfileImage(): array|string
+    public function getProfileImage(): string
     {
-        return $this->profile ?? asset('images/deafult-user.png');
+        return $this->profile ?? asset('images/default-user.png');
     }
 
     public function getProfileImageDirectory(): string

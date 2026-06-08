@@ -15,5 +15,6 @@ class UserObserver
         $fullName = $user->first_name.'-'.$user->last_name;
         $user->account_type = AccountType::CUSTOMER->value;
         $user->slug = $this->slug($fullName, User::class);
+        $user->profile = asset('images/default-user.png');
     }
 }
