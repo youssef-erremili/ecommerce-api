@@ -207,3 +207,33 @@ test('user cannot logout with invalid token', function () {
 
     $response->assertUnauthorized();
 });
+
+// test authenticated user
+test('get authenticated user', function () {
+    $user = User::factory()->create();
+    $token = $user->createToken('authToken')->plainTextToken;
+
+    $response = $this->getJson('/api/v1/account/me', [
+        'Authorization' => 'Bearer '.$token,
+    ]);
+
+    $response->assertOk()
+        ->assertJsonStructure([
+            'message',
+            'type',
+            'data' => [
+                'user' => [
+                    'id',
+                    'full_name',
+                    'email',
+                    'slug',
+                    'profile',
+                    'phone_number',
+                ],
+            ],
+        ])
+        ->assertJsonPath('data.user.email', $user->email);
+
+    expect($response->json('data.user.profile'))
+        ->toBeUrl();
+});
