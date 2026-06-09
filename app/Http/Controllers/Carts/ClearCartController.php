@@ -8,7 +8,7 @@ use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
 
-class BulkDeleteController extends Controller
+class ClearCartController extends Controller
 {
     /**
      * Handle the incoming request.

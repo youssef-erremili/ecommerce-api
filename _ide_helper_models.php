@@ -31,6 +31,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Cart whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Cart whereUserId($value)
  * @mixin \Eloquent
+ * @method static \Database\Factories\CartFactory factory($count = null, $state = [])
  */
 	class Cart extends \Eloquent {}
 }
@@ -169,8 +170,8 @@ namespace App\Models{
  * @method static Builder<static>|Product whereUserId($value)
  * @method static Builder<static>|Product withTrashed(bool $withTrashed = true)
  * @method static Builder<static>|Product withoutTrashed()
- * @method static Builder<static>|Product ownedByUser()
  * @mixin Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product ownedByUser()
  */
 	class Product extends \Eloquent {}
 }
@@ -201,6 +202,9 @@ namespace App\Models{
  * @property-read int|null $tokens_count
  * @property-read Collection<int, Wishlist> $wishlists
  * @property-read int|null $wishlists_count
+ * @property string $name
+ * @property mixed|string $slug
+ * @b string $slug
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -222,7 +226,14 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
- * @mixin \Eloquent
+ * @method static Builder active()
+ * @method static Builder topTierSeller()
+ * @method static User products()
+ * @method static User getProfileImage()
+ * @mixin Eloquent
+ * @property int $is_active
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereSlug($value)
  */
 	class User extends \Eloquent {}
 }

@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Carts\BulkDeleteController;
+use App\Http\Controllers\Carts\ClearCartController;
 use App\Http\Controllers\Carts\CreateCartController;
 use App\Http\Controllers\Carts\DestroyCartController;
 use App\Http\Controllers\Carts\ListCartController;
@@ -81,7 +81,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/lists', ListCartController::class);
         Route::post('/{product}/create', CreateCartController::class);
         Route::delete('/{cart}/delete', DestroyCartController::class);
-        Route::delete('/bulk-delete', BulkDeleteController::class);
+        Route::delete('/bulk-delete', ClearCartController::class);
     });
 
     // add category routes

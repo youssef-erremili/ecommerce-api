@@ -22,7 +22,7 @@ class ListCartController extends Controller
             return ApiResponse::success(
                 ApiMessages::ACTION_COMPLETED,
                 [
-                    'cart' => CartResource::collection($cart),
+                    'carts' => CartResource::collection($cart),
                 ]
             );
         } catch (Exception $exception) {
