@@ -66,9 +66,7 @@ class CartService implements CartServiceInterface
             throw new Exception(ApiMessages::CART_IS_EMPTY);
         }
 
-        $holder = Cart::query()
-            ->where('user_id', auth()->user()->id)
-            ->delete();
+        $holder = Cart::deleteCart();
 
         if (! $holder) {
             throw new Exception(ApiMessages::CLEAR_CART_FAILED);

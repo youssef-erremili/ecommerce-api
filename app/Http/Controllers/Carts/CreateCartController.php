@@ -10,9 +10,14 @@ use App\Services\CartService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
+use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class CreateCartController extends Controller
 {
+    /**
+     * @throws Throwable
+     */
     public function __invoke(CreateCartRequest $request, Product $product, CartService $service)
     {
         try {
@@ -22,8 +27,9 @@ class CreateCartController extends Controller
             return ApiResponse::success(
                 ApiMessages::ACTION_COMPLETED,
                 [
-                    'cart' => CartResource::make($cart)->resolve(),
-                ]
+                    'carts' => CartResource::make($cart)->resolve(),
+                ],
+                Response::HTTP_CREATED
             );
         } catch (Exception $exception) {
             return ApiResponse::error($exception->getMessage());
