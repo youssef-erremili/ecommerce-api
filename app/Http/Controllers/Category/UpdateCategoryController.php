@@ -10,6 +10,7 @@ use App\Services\CategoryService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UpdateCategoryController extends Controller
@@ -17,7 +18,7 @@ class UpdateCategoryController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(CreateCategoryRequest $request, CategoryService $service, Category $category)
+    public function __invoke(CreateCategoryRequest $request, CategoryService $service, Category $category): JsonResponse
     {
         try {
             $service->update($category, $request->validated());

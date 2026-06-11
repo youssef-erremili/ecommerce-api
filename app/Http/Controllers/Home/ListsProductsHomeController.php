@@ -9,6 +9,7 @@ use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use App\Traits\Paginator;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ListsProductsHomeController extends Controller
@@ -22,7 +23,7 @@ class ListsProductsHomeController extends Controller
         protected HomeService $service
     ) {}
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         try {
             $products = $this->service->index();

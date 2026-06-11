@@ -9,7 +9,7 @@ use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use App\Traits\Paginator;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class ListSellerHomeController extends Controller
 {
@@ -25,7 +25,7 @@ class ListSellerHomeController extends Controller
     /**
      * @throws Exception
      */
-    public function __invoke(string $slug)
+    public function __invoke(string $slug): JsonResponse
     {
         try {
             $seller = $this->service->getSellerData($slug);

@@ -8,6 +8,7 @@ use App\Services\WishlistService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class StoreWishListsController extends Controller
@@ -17,7 +18,7 @@ class StoreWishListsController extends Controller
      */
     use AuthorizesRequests;
 
-    public function __invoke(Request $request, WishlistService $service)
+    public function __invoke(Request $request, WishlistService $service): JsonResponse
     {
         try {
             $this->authorize('create', Wishlist::class);

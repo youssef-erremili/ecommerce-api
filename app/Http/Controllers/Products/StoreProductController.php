@@ -10,6 +10,7 @@ use App\Services\ProductService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class StoreProductController extends Controller
 {
@@ -18,7 +19,7 @@ class StoreProductController extends Controller
      *
      * @throws Exception
      */
-    public function __invoke(StoreProductRequest $request, ProductService $service)
+    public function __invoke(StoreProductRequest $request, ProductService $service): JsonResponse
     {
         try {
             $user = $request->user();

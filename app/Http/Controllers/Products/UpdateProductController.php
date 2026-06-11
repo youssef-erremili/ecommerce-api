@@ -11,6 +11,7 @@ use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 
 class UpdateProductController extends Controller
 {
@@ -21,7 +22,7 @@ class UpdateProductController extends Controller
      *
      * @throws Exception
      */
-    public function __invoke(UpdateProductRequest $request, Product $product, ProductService $service)
+    public function __invoke(UpdateProductRequest $request, Product $product, ProductService $service): JsonResponse
     {
         $this->authorize('update', $product);
 
