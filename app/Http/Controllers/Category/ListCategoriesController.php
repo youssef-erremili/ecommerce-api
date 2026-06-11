@@ -9,6 +9,7 @@ use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use App\Traits\Paginator;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ListCategoriesController extends Controller
@@ -18,7 +19,7 @@ class ListCategoriesController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(CategoryService $service)
+    public function __invoke(CategoryService $service): JsonResponse
     {
         try {
             $categories = $service->paginate(100);

@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 
 class SingleProductController extends Controller
 {
@@ -16,7 +17,7 @@ class SingleProductController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Product $product)
+    public function __invoke(Product $product): JsonResponse
     {
         $this->authorize('view', $product);
 

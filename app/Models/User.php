@@ -76,6 +76,11 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static User products()
  * @method static User getProfileImage()
  *
+ * @property int $is_active
+ *
+ * @method static Builder<static>|User whereIsActive($value)
+ * @method static Builder<static>|User whereSlug($value)
+ *
  * @mixin Eloquent
  */
 #[Fillable(['first_name', 'last_name', 'email', 'profile', 'password', 'phone_number', 'account_type', 'physical_address'])]

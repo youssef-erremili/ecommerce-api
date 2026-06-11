@@ -8,6 +8,7 @@ use App\Services\HomeService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ListProductHomeController extends Controller
@@ -19,7 +20,7 @@ class ListProductHomeController extends Controller
         protected HomeService $service
     ) {}
 
-    public function __invoke(string $slug)
+    public function __invoke(string $slug): JsonResponse
     {
         try {
             $product = $this->service->getProduct($slug);

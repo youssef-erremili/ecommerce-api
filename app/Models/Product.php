@@ -16,7 +16,6 @@ use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
 
 /**
- * @method static OwnedByUser()
  * @method static find(int $productId)
  * @method whereBelongsTo(Category $category)
  *
@@ -66,6 +65,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder<static>|Product whereUserId($value)
  * @method static Builder<static>|Product withTrashed(bool $withTrashed = true)
  * @method static Builder<static>|Product withoutTrashed()
+ * @method static Builder<static>|Product ownedByUser()
  *
  * @mixin Eloquent
  */

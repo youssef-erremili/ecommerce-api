@@ -11,6 +11,7 @@ use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 
 class UpdateProductImageController extends Controller
 {
@@ -19,7 +20,7 @@ class UpdateProductImageController extends Controller
      */
     use AuthorizesRequests;
 
-    public function __invoke(UpdateProductImagesRequest $request, Product $product, ProductService $service)
+    public function __invoke(UpdateProductImagesRequest $request, Product $product, ProductService $service): JsonResponse
     {
         try {
             $this->authorize('update', $product);

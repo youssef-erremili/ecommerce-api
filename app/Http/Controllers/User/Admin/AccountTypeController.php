@@ -30,7 +30,9 @@ class AccountTypeController extends Controller
 
             return ApiResponse::success(
                 ApiMessages::ACTION_COMPLETED,
-                ['user' => UserResource::make($account)]
+                [
+                    'user' => UserResource::make($account),
+                ]
             );
 
         } catch (Exception $exception) {

@@ -11,6 +11,7 @@ use App\Support\ApiResponse;
 use App\Traits\Paginator;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 
 class ListUsersController extends Controller
 {
@@ -21,7 +22,7 @@ class ListUsersController extends Controller
      *
      * @throws Exception
      */
-    public function __invoke(UserService $service)
+    public function __invoke(UserService $service): JsonResponse
     {
         try {
             $this->authorize('viewAny', User::class);
