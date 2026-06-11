@@ -11,6 +11,7 @@ use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreProductController extends Controller
 {
@@ -41,7 +42,8 @@ class StoreProductController extends Controller
                 ApiMessages::PRODUCT_CREATED,
                 [
                     'product' => ProductResource::make($product),
-                ]
+                ],
+                Response::HTTP_CREATED
             );
         } catch (Exception $exception) {
             return ApiResponse::error($exception->getMessage());
