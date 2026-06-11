@@ -9,7 +9,6 @@ use App\Services\CategoryService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class CreateCategoryController extends Controller
