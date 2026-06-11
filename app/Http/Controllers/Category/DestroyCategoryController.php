@@ -8,7 +8,7 @@ use App\Services\CategoryService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
-use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class DestroyCategoryController extends Controller
 {
@@ -22,6 +22,8 @@ class DestroyCategoryController extends Controller
 
             return ApiResponse::success(ApiMessages::ACTION_COMPLETED);
 
+        } catch (HttpException $exception) {
+            return ApiResponse::error($exception->getMessage(), $exception->getStatusCode());
         } catch (Exception $exception) {
             return ApiResponse::error($exception->getMessage());
         }

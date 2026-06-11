@@ -10,7 +10,7 @@ use App\Services\CategoryService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
-use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UpdateCategoryController extends Controller
 {
@@ -28,6 +28,8 @@ class UpdateCategoryController extends Controller
                     'category' => CategoryResource::make($category),
                 ]
             );
+        } catch (HttpException $exception) {
+            return ApiResponse::error($exception->getMessage(), $exception->getStatusCode());
         } catch (Exception $exception) {
             return ApiResponse::error($exception->getMessage());
         }
