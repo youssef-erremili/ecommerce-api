@@ -11,7 +11,7 @@
  */
 
 
-namespace App\Models{
+namespace App\Models{use Carbon\Carbon;
 /**
  * @property int $id
  * @property int $user_id
@@ -38,7 +38,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * @method static factory(int $int)
  * @method static max(string $string)
  * @property int $id
  * @property string $category_name
@@ -67,7 +66,7 @@ namespace App\Models{
 	class Category extends \Eloquent {}
 }
 
-namespace App\Models{
+namespace App\Models{use App\Enums\OrderStatus;use App\Enums\PaymentMethod;use App\Enums\PaymentStatus;
 /**
  * @property int $id
  * @property int $user_id

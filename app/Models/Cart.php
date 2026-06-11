@@ -28,6 +28,7 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Cart whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Cart whereUserId($value)
  * @method static deleteCart()
+ * @method static \Database\Factories\CartFactory factory($count = null, $state = [])
  *
  * @mixin \Eloquent
  */
