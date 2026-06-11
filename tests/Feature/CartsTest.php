@@ -7,8 +7,6 @@ use App\Models\User;
 use App\Support\ApiMessages;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use function Pest\Laravel\actingAs;
-
 uses(RefreshDatabase::class);
 
 test('customer or vendor can add to cart', function () {
@@ -19,7 +17,7 @@ test('customer or vendor can add to cart', function () {
         'category_id' => $category->id,
     ]);
 
-    $response = actingAs($user, 'sanctum')->postJson("/api/v1/carts/$product->id/create", [
+    $response = $this->actingAs($user, 'sanctum')->postJson("/api/v1/carts/$product->id/create", [
         'quantity' => 2,
     ]);
 
