@@ -8,7 +8,9 @@ use App\Services\WishlistService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreWishListsController extends Controller
 {
@@ -17,7 +19,7 @@ class StoreWishListsController extends Controller
      */
     use AuthorizesRequests;
 
-    public function __invoke(Request $request, WishlistService $service)
+    public function __invoke(Request $request, WishlistService $service): JsonResponse
     {
         try {
             $this->authorize('create', Wishlist::class);
@@ -25,7 +27,11 @@ class StoreWishListsController extends Controller
             $id = $request->integer('product_id');
             $service->add(auth()->user(), $id);
 
-            return ApiResponse::success(ApiMessages::ACTION_COMPLETED);
+            return ApiResponse::success(
+                ApiMessages::ACTION_COMPLETED,
+                [],
+                Response::HTTP_CREATED
+            );
         } catch (\Exception $exception) {
             return ApiResponse::error($exception->getMessage());
         }

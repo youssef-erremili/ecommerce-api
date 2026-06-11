@@ -9,6 +9,7 @@ use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 
 class DestroyWishListController extends Controller
 {
@@ -17,7 +18,7 @@ class DestroyWishListController extends Controller
      */
     use AuthorizesRequests;
 
-    public function __invoke(WishlistService $service, Wishlist $wishlist)
+    public function __invoke(WishlistService $service, Wishlist $wishlist): JsonResponse
     {
         try {
             $this->authorize('delete', $wishlist);

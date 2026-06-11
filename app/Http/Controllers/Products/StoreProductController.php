@@ -10,6 +10,8 @@ use App\Services\ProductService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreProductController extends Controller
 {
@@ -18,7 +20,7 @@ class StoreProductController extends Controller
      *
      * @throws Exception
      */
-    public function __invoke(StoreProductRequest $request, ProductService $service)
+    public function __invoke(StoreProductRequest $request, ProductService $service): JsonResponse
     {
         try {
             $user = $request->user();
@@ -40,7 +42,8 @@ class StoreProductController extends Controller
                 ApiMessages::PRODUCT_CREATED,
                 [
                     'product' => ProductResource::make($product),
-                ]
+                ],
+                Response::HTTP_CREATED
             );
         } catch (Exception $exception) {
             return ApiResponse::error($exception->getMessage());

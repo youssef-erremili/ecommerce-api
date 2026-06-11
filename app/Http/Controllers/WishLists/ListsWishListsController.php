@@ -8,6 +8,7 @@ use App\Services\WishlistService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use App\Traits\Paginator;
+use Illuminate\Http\JsonResponse;
 
 class ListsWishListsController extends Controller
 {
@@ -16,7 +17,7 @@ class ListsWishListsController extends Controller
      */
     use Paginator;
 
-    public function __invoke(WishlistService $service)
+    public function __invoke(WishlistService $service): JsonResponse
     {
         try {
             $wishlist = $service->getUserWishlist();

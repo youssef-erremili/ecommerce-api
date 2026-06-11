@@ -8,13 +8,14 @@ use App\Services\CartService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 use LogicException;
 
 class DestroyCartController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __invoke(Cart $cart, CartService $service)
+    public function __invoke(Cart $cart, CartService $service): JsonResponse
     {
         try {
             $this->authorize('delete', $cart);

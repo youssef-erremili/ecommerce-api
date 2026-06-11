@@ -10,13 +10,14 @@ use App\Services\CategoryService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class ToggleStatusCategoryController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(ToggleStatusCategoryRequest $request, CategoryService $service, Category $category)
+    public function __invoke(ToggleStatusCategoryRequest $request, CategoryService $service, Category $category): JsonResponse
     {
         try {
             $category = $service->toggleStatus($category, $request->boolean('is_active'));

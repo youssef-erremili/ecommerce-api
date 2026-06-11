@@ -9,6 +9,7 @@ use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 
 class DestroyProductController extends Controller
 {
@@ -19,7 +20,7 @@ class DestroyProductController extends Controller
      *
      * @throws Exception
      */
-    public function __invoke(ProductService $service, Product $product)
+    public function __invoke(ProductService $service, Product $product): JsonResponse
     {
         try {
             $this->authorize('delete', $product);

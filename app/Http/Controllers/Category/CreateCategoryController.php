@@ -9,14 +9,15 @@ use App\Services\CategoryService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class CreateCategoryController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(CreateCategoryRequest $request, CategoryService $service)
+    public function __invoke(CreateCategoryRequest $request, CategoryService $service): JsonResponse
     {
         try {
             $category = $service->create($request->validated());
@@ -25,7 +26,8 @@ class CreateCategoryController extends Controller
                 ApiMessages::ACTION_COMPLETED,
                 [
                     'category' => CategoryResource::make($category),
-                ]
+                ],
+                Response::HTTP_CREATED
             );
 
         } catch (Exception $exception) {

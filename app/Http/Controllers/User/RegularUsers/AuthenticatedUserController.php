@@ -8,6 +8,7 @@ use App\Services\UserService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class AuthenticatedUserController extends Controller
 {
@@ -16,7 +17,7 @@ class AuthenticatedUserController extends Controller
      *
      * @throws Exception
      */
-    public function __invoke(UserService $service)
+    public function __invoke(UserService $service): JsonResponse
     {
         try {
             $user = $service->getAuthUser();

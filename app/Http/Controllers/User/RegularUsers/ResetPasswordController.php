@@ -8,13 +8,14 @@ use App\Services\UserService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class ResetPasswordController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(ResetPasswordRequest $request, UserService $service)
+    public function __invoke(ResetPasswordRequest $request, UserService $service): JsonResponse
     {
         try {
             $newPassword = $request->validated('password');

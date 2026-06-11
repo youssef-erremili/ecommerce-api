@@ -10,6 +10,7 @@ use App\Services\CartService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -18,7 +19,7 @@ class CreateCartController extends Controller
     /**
      * @throws Throwable
      */
-    public function __invoke(CreateCartRequest $request, Product $product, CartService $service)
+    public function __invoke(CreateCartRequest $request, Product $product, CartService $service): JsonResponse
     {
         try {
             $data = $request->validated();

@@ -8,13 +8,14 @@ use App\Services\CartService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class ListCartController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(CartService $service)
+    public function __invoke(CartService $service): JsonResponse
     {
         try {
             $cart = $service->getCartItems();
