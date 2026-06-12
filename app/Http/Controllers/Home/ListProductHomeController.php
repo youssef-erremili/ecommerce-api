@@ -28,7 +28,7 @@ class ListProductHomeController extends Controller
             return ApiResponse::success(
                 ApiMessages::ACTION_COMPLETED,
                 [
-                    'product' => ProductResource::collection($product),
+                    'product' => ProductResource::make($product)->resolve(),
                 ]
             );
         } catch (Exception $exception) {
