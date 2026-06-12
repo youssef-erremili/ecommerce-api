@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Support\ApiMessages;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class HomeService implements HomeServiceInterface
@@ -16,7 +15,7 @@ class HomeService implements HomeServiceInterface
     /**
      * @throws Exception
      */
-    public function index(int $perPage = 30): LengthAwarePaginator
+    public function paginate(int $perPage = 30): LengthAwarePaginator
     {
         $holder = Product::query()
             ->with('user', 'category')
@@ -41,13 +40,15 @@ class HomeService implements HomeServiceInterface
     }
 
     /**
-     * @return Collection one product only
+     * @return Product one product only
      *
      * @throws Exception
      */
-    public function getProduct(string $slug): Collection
+    public function getProduct(string $slug): Product
     {
-        $holder = Product::query()->where('slug', $slug)->get();
+        $holder = Product::with(['user', 'category'])
+            ->where('slug', $slug)
+            ->first();
 
         if (! $holder || $holder->count() === 0) {
             throw new Exception(ApiMessages::PRODUCT_NOT_FOUND);
