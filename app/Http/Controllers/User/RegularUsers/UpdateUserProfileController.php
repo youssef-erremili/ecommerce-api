@@ -37,7 +37,7 @@ class UpdateUserProfileController extends Controller
         } catch (Exception $exception) {
             return ApiResponse::error(
                 $exception->getMessage(),
-                $exception->getCode()
+                500
             );
         }
     }

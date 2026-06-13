@@ -46,7 +46,7 @@ class StoreProductController extends Controller
                 Response::HTTP_CREATED
             );
         } catch (Exception $exception) {
-            return ApiResponse::error($exception->getMessage());
+            return ApiResponse::error($exception->getMessage(), 500);
         }
     }
 }
