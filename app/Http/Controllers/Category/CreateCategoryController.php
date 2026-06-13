@@ -31,10 +31,7 @@ class CreateCategoryController extends Controller
             );
 
         } catch (Exception $exception) {
-            return ApiResponse::error(
-                $exception->getMessage(),
-                500
-            );
+            return ApiResponse::error($exception->getMessage(), 500);
         }
     }
 }
