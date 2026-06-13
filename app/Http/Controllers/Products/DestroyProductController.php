@@ -29,7 +29,7 @@ class DestroyProductController extends Controller
             return ApiResponse::success(ApiMessages::PRODUCT_DELETED);
 
         } catch (Exception $exception) {
-            return ApiResponse::error($exception->getMessage());
+            return ApiResponse::error($exception->getMessage(), 500);
         }
     }
 }

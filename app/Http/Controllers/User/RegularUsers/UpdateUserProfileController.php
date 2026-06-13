@@ -35,10 +35,7 @@ class UpdateUserProfileController extends Controller
             );
 
         } catch (Exception $exception) {
-            return ApiResponse::error(
-                $exception->getMessage(),
-                $exception->getCode()
-            );
+            return ApiResponse::error($exception->getMessage(), 400);
         }
     }
 }

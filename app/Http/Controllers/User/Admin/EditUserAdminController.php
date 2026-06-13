@@ -32,7 +32,7 @@ class EditUserAdminController extends Controller
                 ]
             );
         } catch (Exception $exception) {
-            return ApiResponse::error($exception->getMessage());
+            return ApiResponse::error($exception->getMessage(), 500);
         }
     }
 }

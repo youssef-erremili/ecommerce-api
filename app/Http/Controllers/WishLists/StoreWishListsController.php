@@ -7,6 +7,7 @@ use App\Models\Wishlist;
 use App\Services\WishlistService;
 use App\Support\ApiMessages;
 use App\Support\ApiResponse;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -32,8 +33,8 @@ class StoreWishListsController extends Controller
                 [],
                 Response::HTTP_CREATED
             );
-        } catch (\Exception $exception) {
-            return ApiResponse::error($exception->getMessage());
+        } catch (Exception $exception) {
+            return ApiResponse::error($exception->getMessage(), 500);
         }
     }
 }

@@ -23,7 +23,7 @@ class ResetPasswordController extends Controller
 
             return ApiResponse::success(ApiMessages::ACTION_COMPLETED);
         } catch (Exception $exception) {
-            return ApiResponse::error($exception->getMessage());
+            return ApiResponse::error($exception->getMessage(), 500);
         }
     }
 }

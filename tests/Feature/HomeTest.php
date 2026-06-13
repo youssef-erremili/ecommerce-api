@@ -98,7 +98,7 @@ test('test user can get single product as guest', function () {
 test('test if there is no product exist in Database', function () {
     $response = $this->getJson('/api/v1/home/product/1');
 
-    $response->assertBadRequest()
+    $response->assertStatus(500)
         ->assertJsonStructure([
             'message',
             'type',
