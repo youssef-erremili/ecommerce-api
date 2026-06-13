@@ -26,7 +26,7 @@ class ListsProductsHomeController extends Controller
     public function __invoke(Request $request): JsonResponse
     {
         try {
-            $products = $this->service->index();
+            $products = $this->service->paginate();
 
             return ApiResponse::success(
                 ApiMessages::ACTION_COMPLETED,
