@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AccountType;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
@@ -10,7 +11,7 @@ pest()->uses(RefreshDatabase::class);
 
 test('create a new category as admin', function () {
     $user = User::factory()->createQuietly([
-        'account_type' => 'admin',
+        'account_type' => AccountType::ADMIN,
     ]);
 
     $response = $this->actingAs($user, 'sanctum')->postJson('/api/v1/category/create', [
@@ -94,7 +95,7 @@ test('create a new category as guest user', function () {
 
 test('delete a existing category as admin', function () {
     $user = User::factory()->createQuietly([
-        'account_type' => 'admin',
+        'account_type' => AccountType::ADMIN,
     ]);
     $category = Category::factory()->create([
         'is_active' => true,
@@ -176,10 +177,10 @@ test('delete a category as guest user', function () {
 
 test('delete a category that has products fails', function () {
     $user = User::factory()->createQuietly([
-        'account_type' => 'admin',
+        'account_type' => AccountType::ADMIN,
     ]);
     $vendor = User::factory()->createQuietly([
-        'account_type' => 'vendor',
+        'account_type' => AccountType::VENDOR,
     ]);
     $category = Category::factory()->create([
         'is_active' => true,
@@ -209,7 +210,7 @@ test('delete a category that has products fails', function () {
 
 test('update a category as admin', function () {
     $user = User::factory()->createQuietly([
-        'account_type' => 'admin',
+        'account_type' => AccountType::ADMIN,
     ]);
     $category = Category::factory()->create([
         'is_active' => true,
@@ -301,10 +302,10 @@ test('update a category as guest user', function () {
 
 test('update a category that has products fails', function () {
     $user = User::factory()->createQuietly([
-        'account_type' => 'admin',
+        'account_type' => AccountType::ADMIN,
     ]);
     $vendor = User::factory()->createQuietly([
-        'account_type' => 'vendor',
+        'account_type' => AccountType::ADMIN,
     ]);
     $category = Category::factory()->create([
         'is_active' => true,
@@ -337,7 +338,7 @@ test('update a category that has products fails', function () {
 
 test('toggle category status as admin', function () {
     $user = User::factory()->createQuietly([
-        'account_type' => 'admin',
+        'account_type' => AccountType::ADMIN,
     ]);
     $category = Category::factory()->create([
         'is_active' => true,
@@ -376,7 +377,7 @@ test('toggle category status as admin', function () {
 
 test('toggle category status with same status fails', function () {
     $user = User::factory()->createQuietly([
-        'account_type' => 'admin',
+        'account_type' => AccountType::ADMIN,
     ]);
     $category = Category::factory()->create([
         'is_active' => true,
@@ -450,7 +451,7 @@ test('toggle category status as guest user', function () {
 
 test('list categories as admin', function () {
     $user = User::factory()->createQuietly([
-        'account_type' => 'admin',
+        'account_type' => AccountType::ADMIN,
     ]);
     Category::factory()->count(3)->create();
 
@@ -508,7 +509,7 @@ test('list categories as guest user', function () {
 
 test('create category validation fails with missing fields', function () {
     $user = User::factory()->createQuietly([
-        'account_type' => 'admin',
+        'account_type' => AccountType::ADMIN,
     ]);
 
     $response = $this->actingAs($user, 'sanctum')->postJson('/api/v1/category/create', []);
@@ -525,7 +526,7 @@ test('create category validation fails with missing fields', function () {
 
 test('create category validation fails with duplicate name', function () {
     $user = User::factory()->createQuietly([
-        'account_type' => 'admin',
+        'account_type' => AccountType::ADMIN,
     ]);
     Category::factory()->create([
         'category_name' => 'Jewellery',
