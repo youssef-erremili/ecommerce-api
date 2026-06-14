@@ -16,8 +16,8 @@ trait FileManager
         $urls = [];
         foreach ($files as $file) {
             try {
-                $path = $file->store($path, 'supabase');
-                $urls[] = Storage::disk('supabase')->url($path);
+                $uploadedPath = $file->store($path, 'supabase');
+                $urls[] = Storage::disk('supabase')->url($uploadedPath);
             } catch (UnableToWriteFile $exception) {
                 Log::error('Supabase upload failed: '.$exception->getMessage());
                 throw $exception;

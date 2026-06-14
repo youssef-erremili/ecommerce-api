@@ -12,7 +12,6 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class UserService implements UserServiceInterface
@@ -37,7 +36,7 @@ class UserService implements UserServiceInterface
 
     public function paginate(int $perPage = 20): LengthAwarePaginator
     {
-        $holder = DB::table('users')
+        $holder = User::query()
             ->whereNot('account_type', AccountType::ADMIN)
             ->paginate($perPage);
 
