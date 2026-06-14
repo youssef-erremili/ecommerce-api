@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AccountType;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
@@ -12,7 +13,7 @@ pest()->uses(GenerateSlug::class);
 
 test('test user can get single product as guest', function () {
     $user = User::factory()->createQuietly([
-        'account_type' => 'vendor',
+        'account_type' => AccountType::VENDOR,
         'is_active' => true,
     ]);
     $category = Category::factory()->create([
@@ -114,4 +115,58 @@ test('test if there is no product exist in Database', function () {
     expect($response->assertJsonMissingPath('data'));
 
     $this->assertDatabaseCount('products', 0);
+});
+
+test('guest can list home products', function () {
+    $vendor = User::factory()->create([
+        'account_type' => AccountType::VENDOR,
+        'is_active' => true,
+    ]);
+    $category = Category::factory()->create([
+        'is_active' => true,
+    ]);
+    Product::factory()->count(3)->create([
+        'user_id' => $vendor->id,
+        'category_id' => $category->id,
+        'is_active' => true,
+    ]);
+
+    $response = $this->getJson('/api/v1/home/products');
+
+    $response->assertOk()
+        ->assertJsonStructure([
+            'message',
+            'type',
+            'data' => [
+                'products',
+                'pagination',
+            ],
+        ]);
+});
+
+test('guest can view a seller products', function () {
+    $seller = User::factory()->create([
+        'account_type' => AccountType::VENDOR,
+        'is_active' => true,
+    ]);
+    $category = Category::factory()->create([
+        'is_active' => true,
+    ]);
+    Product::factory()->count(2)->create([
+        'user_id' => $seller->id,
+        'category_id' => $category->id,
+        'is_active' => true,
+    ]);
+
+    $response = $this->getJson("/api/v1/home/seller/$seller->slug");
+
+    $response->assertOk()
+        ->assertJsonStructure([
+            'message',
+            'type',
+            'data' => [
+                'pagination',
+                'vendor',
+            ],
+        ]);
 });
