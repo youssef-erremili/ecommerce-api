@@ -25,3 +25,8 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+meilisearch.exe
+*.mdb
+meili_data/
+/data.ms/instance-uid
