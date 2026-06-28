@@ -12,4 +12,6 @@ interface HomeServiceInterface
     public function getProduct(string $slug): Product;
 
     public function getSellerData(string $slug, int $perPage = 12): LengthAwarePaginator;
+
+    public function search(string|int $query, int $perPage = 30): LengthAwarePaginator;
 }
