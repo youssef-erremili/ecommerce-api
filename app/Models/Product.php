@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
+use Laravel\Scout\Searchable;
 
 /**
  * @method static find(int $productId)
@@ -83,7 +84,7 @@ use Laravel\Sanctum\PersonalAccessToken;
 ])]
 class Product extends Model
 {
-    use HasApiTokens, HasFactory, SoftDeletes;
+    use HasApiTokens, HasFactory, Searchable, SoftDeletes;
 
     protected function casts(): array
     {
@@ -119,5 +120,17 @@ class Product extends Model
     public function carts(): HasMany
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'product_name' => $this->product_name,
+            'description' => $this->description,
+            'vendor' => $this->user->first_name.' '.$this->user->last_name,
+            'is_active' => $this->is_active,
+            'account_type' => $this->user->account_type,
+        ];
     }
 }

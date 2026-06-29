@@ -3,12 +3,14 @@
 namespace App\Services;
 
 use App\Contracts\Services\HomeServiceInterface;
+use App\Enums\AccountType;
 use App\Models\Product;
 use App\Models\User;
 use App\Support\ApiMessages;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Laravel\Scout\Builder as ScoutBuilder;
 
 class HomeService implements HomeServiceInterface
 {
@@ -82,6 +84,33 @@ class HomeService implements HomeServiceInterface
 
         if ($holder->count() === 0) {
             throw new Exception(ApiMessages::PRODUCT_NOT_FOUND);
+        }
+
+        return $holder;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function search(string|int $query, int $perPage = 30): LengthAwarePaginator
+    {
+        $holder = Product::search($query)
+            ->when(request('user'), function (ScoutBuilder $user) {
+                $user->where('is_active', true);
+                $user->where('account_type', AccountType::VENDOR);
+            })
+            ->when(request('category'), function (ScoutBuilder $category) {
+                $category->where('is_active', true);
+            })
+            ->where('is_active', true)
+            ->paginate($perPage);
+
+        if (! $holder) {
+            throw new Exception(ApiMessages::AN_ERROR_OCCURRED, 500);
+        }
+
+        if ($holder->count() === 0) {
+            throw new Exception(ApiMessages::PRODUCT_NOT_FOUND, 404);
         }
 
         return $holder;

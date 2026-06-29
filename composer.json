@@ -10,10 +10,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
+        "http-interop/http-factory-guzzle": "^1.2",
         "laravel/framework": "^13.0",
         "laravel/sanctum": "^4.0",
+        "laravel/scout": "^11.3",
         "laravel/tinker": "^3.0",
-        "league/flysystem-aws-s3-v3": "3.0"
+        "league/flysystem-aws-s3-v3": "3.0",
+        "meilisearch/meilisearch-php": "^1.16"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.7",
