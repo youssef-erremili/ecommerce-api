@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Contracts\Services\ProductServiceInterface;
-use App\Jobs\DeleteProductImage;
+use App\Jobs\DeleteProductImageJob;
 use App\Models\Product;
 use App\Models\User;
 use App\Support\ApiMessages;
@@ -73,7 +73,7 @@ class ProductService implements ProductServiceInterface
         }
 
         if (count($images) > 0) {
-            DeleteProductImage::dispatch($images);
+            DeleteProductImageJob::dispatch($images);
         }
 
         return true;

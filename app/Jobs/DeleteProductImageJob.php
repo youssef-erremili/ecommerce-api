@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -9,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class DeleteProductImage implements ShouldQueue
+class DeleteProductImageJob implements ShouldQueue
 {
     use Dispatchable, Queueable, SerializesModels;
 
@@ -30,7 +31,7 @@ class DeleteProductImage implements ShouldQueue
                 if (Storage::disk('supabase')->exists($path)) {
                     Storage::disk('supabase')->delete($path);
                 }
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 Log::error("Failed to delete image from Supabase: {$path}. Error: ".$exception->getMessage());
             }
         }

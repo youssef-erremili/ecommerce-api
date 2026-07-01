@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\OnBoardingMail;
 use App\Models\User;
 use App\Support\ApiMessages;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -236,4 +237,25 @@ test('get authenticated user', function () {
 
     expect($response->json('data.user.profile'))
         ->toBeUrl();
+});
+
+it('queues an onboarding email after successful registration', function () {
+    Mail::fake();
+
+    $response = $this->postJson('/api/v1/auth/register', [
+        'first_name' => 'John',
+        'last_name' => 'Doe',
+        'email' => 'john@example.com',
+        'phone_number' => '0090809475',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+    ]);
+
+    $response->assertCreated();
+
+    Mail::assertQueued(OnBoardingMail::class);
+
+    Mail::assertQueued(OnBoardingMail::class, function (OnBoardingMail $mail) {
+        return $mail->hasTo('john@example.com');
+    });
 });
